@@ -23,17 +23,19 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Configuration {
+    public static String                 notapplicableStr = "N/A";
 
-    private static String[]              remoteStrings = {"Hostname", "Username", "Password", "Working directory"};
+    private static String[]              remoteStrings    = {"Hostname", "Username", "Password", "Working directory"};
     private static Map<String, String[]> defaultvalues;
     static {
         defaultvalues = new LinkedHashMap<>();
         defaultvalues.put("DesiJ", new String[]{"$BASEDIR/bin/DesiJ", "$BASEDIR/bin/DesiJ.bat"});
-        defaultvalues.put("Balsa-c", new String[]{"$BASEDIR/tools/balsa/bin/balsa-c", "N/A"});
-        defaultvalues.put("Balsa-netlist", new String[]{"$BASEDIR/tools/balsa/bin/balsa-netlist", "N/A"});
+        defaultvalues.put("Balsa-c", new String[]{"$BASEDIR/tools/balsa/bin/balsa-c", notapplicableStr});
+        defaultvalues.put("Balsa-netlist", new String[]{"$BASEDIR/tools/balsa/bin/balsa-netlist", notapplicableStr});
         defaultvalues.put("Petrify", new String[]{"$BASEDIR/tools/petrify/petrify", "$BASEDIR/tools/petrify/petrify.exe"});
         defaultvalues.put("PUNF", new String[]{"$BASEDIR/tools/punf/punf", "$BASEDIR/tools/punf/punf.exe"});
         defaultvalues.put("MPSAT", new String[]{"$BASEDIR/tools/mpsat/mpsat", "$BASEDIR/tools/mpsat/mpsat.exe"});
+        defaultvalues.put("Petreset", new String[]{notapplicableStr, notapplicableStr});
         defaultvalues.put("ASGlogic", new String[]{"$BASEDIR/bin/ASGlogic", "$BASEDIR/bin/ASGlogic.bat"});
         defaultvalues.put("Espresso", new String[]{"$BASEDIR/tools/espresso/espresso", "$BASEDIR/tools/espresso/espresso.exe"});
     }
@@ -74,6 +76,10 @@ public class Configuration {
 
     public String getMPSATCmd() {
         return frame.getEntryValue("MPSAT");
+    }
+
+    public String getPetresetCmd() {
+        return frame.getEntryValue("Petreset");
     }
 
     public String getASGlogicCmd() {

@@ -260,8 +260,8 @@ public class ConfigFrame extends JFrame {
         GridBagLayout gbl_toolspanel = new GridBagLayout();
         gbl_toolspanel.columnWidths = new int[]{100, 300, 50, 100, 0};
         gbl_toolspanel.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
-        gbl_toolspanel.rowHeights = new int[]{15, 15, 15, 15, 15, 15, 15, 15, 0};
-        gbl_toolspanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gbl_toolspanel.rowHeights = new int[]{15, 15, 15, 15, 15, 15, 15, 15, 15, 0};
+        gbl_toolspanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         toolsPanel.setLayout(gbl_toolspanel);
 
         int i = 0;

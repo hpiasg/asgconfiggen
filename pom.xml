@@ -140,6 +140,7 @@ along with ASGconfiggen.  If not, see <http://www.gnu.org/licenses/>.
 									<artifact>de.uni_potsdam.hpi.asg:asgdelaymatch</artifact>
 									<includes>
 										<include>de/uni_potsdam/hpi/asg/delaymatch/io/Config.class</include>
+										<include>de/uni_potsdam/hpi/asg/delaymatch/io/ToolConfig.class</include>
 										<include>de/uni_potsdam/hpi/asg/delaymatch/io/RemoteInvocation.class</include>
 									</includes>
 								</filter>

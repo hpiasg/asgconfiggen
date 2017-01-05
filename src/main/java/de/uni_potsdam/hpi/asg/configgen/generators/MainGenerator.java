@@ -20,7 +20,6 @@ package de.uni_potsdam.hpi.asg.configgen.generators;
  */
 
 import de.uni_potsdam.hpi.asg.configgen.Configuration;
-import de.uni_potsdam.hpi.asg.resyntool.io.Config;
 
 public class MainGenerator {
 
@@ -31,13 +30,17 @@ public class MainGenerator {
     }
 
     public void generate() {
-
-        System.out.println("Unix: " + config.isUnixSelected());
-        System.out.println("Windows: " + config.isWindowsSelected());
-        System.out.println("DesiJ: " + config.getDesijCmd());
-
-        Config c = new Config();
-        c.componentconfig = "test";
-
+        if(config.isResynSelected()) {
+            ResynGenerator rgen = new ResynGenerator(config);
+            rgen.generate();
+        }
+        if(config.isLogicSelected()) {
+            LogicGenerator lgen = new LogicGenerator(config);
+            lgen.generate();
+        }
+        if(config.isDelayMatchSelected()) {
+            DelayMatchGenerator dmgen = new DelayMatchGenerator(config);
+            dmgen.generate();
+        }
     }
 }
