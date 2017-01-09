@@ -63,7 +63,7 @@ public class ConfigFrame extends JFrame {
     private Configuration           config;
 
     public ConfigFrame(Configuration config) {
-        super("Config");
+        super("ASGconfiggen");
         this.config = config;
         this.config.setFrame(this);
         entries = new HashMap<>();

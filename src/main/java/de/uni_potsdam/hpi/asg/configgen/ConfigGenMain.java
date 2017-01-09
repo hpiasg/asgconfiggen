@@ -27,6 +27,7 @@ public class ConfigGenMain {
         ConfigFrame cframe = new ConfigFrame(new Configuration());
         cframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         cframe.pack();
+        cframe.setLocationRelativeTo(null); //center
         cframe.setVisible(true);
     }
 }
