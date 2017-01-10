@@ -19,23 +19,24 @@ package de.uni_potsdam.hpi.asg.configgen;
  * along with ASGconfiggen.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import javax.swing.JFrame;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
-public class ConfigGenMain {
+public class ConfigWindowAdapter extends WindowAdapter {
 
-    public static void main(String[] args) {
-        ConfigWindowAdapter adapt = new ConfigWindowAdapter();
-        ConfigFrame cframe = new ConfigFrame(new Configuration(), adapt);
-        cframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        cframe.pack();
-        cframe.setLocationRelativeTo(null); //center
-        cframe.setVisible(true);
+    private boolean closed;
 
-        while(!adapt.isClosed()) {
-            try {
-                Thread.sleep(1000);
-            } catch(InterruptedException e) {
-            }
-        }
+    public ConfigWindowAdapter() {
+        this.closed = false;
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        super.windowClosed(e);
+        closed = true;
+    }
+
+    public boolean isClosed() {
+        return closed;
     }
 }

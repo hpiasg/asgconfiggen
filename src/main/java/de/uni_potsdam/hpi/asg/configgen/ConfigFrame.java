@@ -40,6 +40,7 @@ import de.uni_potsdam.hpi.asg.configgen.generators.MainGenerator;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.WindowAdapter;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,12 +63,13 @@ public class ConfigFrame extends JFrame {
 
     private Configuration           config;
 
-    public ConfigFrame(Configuration config) {
+    public ConfigFrame(Configuration config, WindowAdapter adapt) {
         super("ASGconfiggen");
         this.config = config;
         this.config.setFrame(this);
         entries = new HashMap<>();
         parent = this;
+        this.addWindowListener(adapt);
 
         JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
         getContentPane().add(tabbedPane, BorderLayout.CENTER);
