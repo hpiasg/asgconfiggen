@@ -20,10 +20,17 @@ package de.uni_potsdam.hpi.asg.configgen;
  */
 
 import javax.swing.JFrame;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class ConfigGenMain {
 
     public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch(ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e1) {
+            return;
+        }
         ConfigWindowAdapter adapt = new ConfigWindowAdapter();
         ConfigFrame cframe = new ConfigFrame(new Configuration(), adapt);
         cframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
