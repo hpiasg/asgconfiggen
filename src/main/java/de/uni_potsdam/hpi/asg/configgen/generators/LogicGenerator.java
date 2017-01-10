@@ -58,6 +58,7 @@ public class LogicGenerator {
             }
         }
         LogicGenerator.writeOut(logicconfig, file.getAbsolutePath());
+        System.out.println("Generated " + file.getAbsolutePath());
     }
 
     private String formatCmd(String cmd) {

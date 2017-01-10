@@ -68,6 +68,7 @@ public class ResynGenerator {
             }
         }
         ResynGenerator.writeOut(resynconfig, file.getAbsolutePath());
+        System.out.println("Generated " + file.getAbsolutePath());
     }
 
     private String formatCmd(String cmd) {

@@ -59,6 +59,7 @@ public class DelayMatchGenerator {
             }
         }
         DelayMatchGenerator.writeOut(delaymatchconfig, file.getAbsolutePath());
+        System.out.println("Generated " + file.getAbsolutePath());
     }
 
     public static boolean writeOut(Config cfg, String filename) {
