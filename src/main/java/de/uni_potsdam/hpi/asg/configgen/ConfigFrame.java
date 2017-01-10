@@ -125,7 +125,7 @@ public class ConfigFrame extends JFrame {
         gbc_locationtext.gridy = 5;
         panel.add(locationtext, gbc_locationtext);
         locationtext.setColumns(10);
-        locationtext.setText("../config");
+        locationtext.setText("$BASEDIR/config");
 
         final JButton loationbutton = new JButton("...");
         loationbutton.addActionListener(new ActionListener() {

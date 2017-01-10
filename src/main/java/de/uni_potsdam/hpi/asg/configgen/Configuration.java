@@ -127,6 +127,15 @@ public class Configuration {
     }
 
     public String getOutputDir() {
-        return frame.getOutputDir();
+        return replaceBasedir(frame.getOutputDir());
+    }
+
+    private String replaceBasedir(String str) {
+        String basedir = System.getProperty("basedir");
+        String os = System.getProperty("os.name").toLowerCase();
+        if(os.contains("win")) {
+            basedir = basedir.replaceAll("\\\\", "/");
+        }
+        return str.replaceAll("\\$BASEDIR", basedir);
     }
 }
