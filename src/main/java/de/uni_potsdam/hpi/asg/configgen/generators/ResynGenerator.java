@@ -20,13 +20,6 @@ package de.uni_potsdam.hpi.asg.configgen.generators;
  */
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 
 import de.uni_potsdam.hpi.asg.configgen.Configuration;
 import de.uni_potsdam.hpi.asg.resyntool.io.Config;
@@ -47,14 +40,14 @@ public class ResynGenerator {
         resynconfig.componentconfig = "";
         resynconfig.workdir = "";
         resynconfig.toolconfig = new ToolConfig();
-        resynconfig.toolconfig.desijcmd = formatCmd(config.getDesijCmd());
-        resynconfig.toolconfig.balsaccmd = formatCmd(config.getBalsaCCmd());
-        resynconfig.toolconfig.balsanetlistcmd = formatCmd(config.getBalsaNetlistCmd());
-        resynconfig.toolconfig.petrifycmd = formatCmd(config.getPetrifyCmd());
-        resynconfig.toolconfig.petresetcmd = formatCmd(config.getPetresetCmd());
-        resynconfig.toolconfig.mpsatcmd = formatCmd(config.getMPSATCmd());
-        resynconfig.toolconfig.punfcmd = formatCmd(config.getPUNFCmd());
-        resynconfig.toolconfig.asglogiccmd = formatCmd(config.getASGlogicCmd());
+        resynconfig.toolconfig.desijcmd = ConfigExportHelper.formatCmd(config.getDesijCmd());
+        resynconfig.toolconfig.balsaccmd = ConfigExportHelper.formatCmd(config.getBalsaCCmd());
+        resynconfig.toolconfig.balsanetlistcmd = ConfigExportHelper.formatCmd(config.getBalsaNetlistCmd());
+        resynconfig.toolconfig.petrifycmd = ConfigExportHelper.formatCmd(config.getPetrifyCmd());
+        resynconfig.toolconfig.petresetcmd = ConfigExportHelper.formatCmd(config.getPetresetCmd());
+        resynconfig.toolconfig.mpsatcmd = ConfigExportHelper.formatCmd(config.getMPSATCmd());
+        resynconfig.toolconfig.punfcmd = ConfigExportHelper.formatCmd(config.getPUNFCmd());
+        resynconfig.toolconfig.asglogiccmd = ConfigExportHelper.formatCmd(config.getASGlogicCmd());
         resynconfig.toolconfig.designCompilerCmd = new RemoteInvocation();
         resynconfig.toolconfig.designCompilerCmd.hostname = config.getRemoteHostname();
         resynconfig.toolconfig.designCompilerCmd.username = config.getRemoteUsername();
@@ -62,36 +55,10 @@ public class ResynGenerator {
         resynconfig.toolconfig.designCompilerCmd.workingdir = config.getRemotWorkingDirectory();
 
         File file = new File(config.getOutputDir(), outfile);
-        if(!file.getParentFile().exists()) {
-            if(!file.getParentFile().mkdirs()) {
-                System.err.println("Failed to mkdir");
-            }
+        if(!ConfigExportHelper.writeOut(Config.class, resynconfig, file)) {
+            System.err.println("Failed to generate " + file.getAbsolutePath());
+            return;
         }
-        ResynGenerator.writeOut(resynconfig, file.getAbsolutePath());
         System.out.println("Generated " + file.getAbsolutePath());
-    }
-
-    private String formatCmd(String cmd) {
-        if(cmd.equals(Configuration.notapplicableStr)) {
-            return null;
-        }
-        return cmd;
-    }
-
-    public static boolean writeOut(Config cfg, String filename) {
-        try {
-            Writer fw = new FileWriter(filename);
-            JAXBContext context = JAXBContext.newInstance(Config.class);
-            Marshaller m = context.createMarshaller();
-            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            m.marshal(cfg, fw);
-            return true;
-        } catch(JAXBException e) {
-            System.err.println(e.getLocalizedMessage());
-            return false;
-        } catch(IOException e) {
-            System.err.println(e.getLocalizedMessage());
-            return false;
-        }
     }
 }

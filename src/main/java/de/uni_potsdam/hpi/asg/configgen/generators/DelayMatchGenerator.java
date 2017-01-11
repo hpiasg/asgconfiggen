@@ -20,13 +20,6 @@ package de.uni_potsdam.hpi.asg.configgen.generators;
  */
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 
 import de.uni_potsdam.hpi.asg.configgen.Configuration;
 import de.uni_potsdam.hpi.asg.delaymatch.io.Config;
@@ -53,29 +46,10 @@ public class DelayMatchGenerator {
         delaymatchconfig.toolconfig.designCompilerCmd.workingdir = config.getRemotWorkingDirectory();
 
         File file = new File(config.getOutputDir(), outfile);
-        if(!file.getParentFile().exists()) {
-            if(!file.getParentFile().mkdirs()) {
-                System.err.println("Failed to mkdir");
-            }
+        if(!ConfigExportHelper.writeOut(Config.class, delaymatchconfig, file)) {
+            System.err.println("Failed to generate " + file.getAbsolutePath());
+            return;
         }
-        DelayMatchGenerator.writeOut(delaymatchconfig, file.getAbsolutePath());
         System.out.println("Generated " + file.getAbsolutePath());
-    }
-
-    public static boolean writeOut(Config cfg, String filename) {
-        try {
-            Writer fw = new FileWriter(filename);
-            JAXBContext context = JAXBContext.newInstance(Config.class);
-            Marshaller m = context.createMarshaller();
-            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            m.marshal(cfg, fw);
-            return true;
-        } catch(JAXBException e) {
-            System.err.println(e.getLocalizedMessage());
-            return false;
-        } catch(IOException e) {
-            System.err.println(e.getLocalizedMessage());
-            return false;
-        }
     }
 }

@@ -20,13 +20,6 @@ package de.uni_potsdam.hpi.asg.configgen.generators;
  */
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 
 import de.uni_potsdam.hpi.asg.configgen.Configuration;
 import de.uni_potsdam.hpi.asg.logictool.io.Config;
@@ -45,43 +38,17 @@ public class LogicGenerator {
         Config logicconfig = new Config();
         logicconfig.workdir = "";
         logicconfig.toolconfig = new ToolConfig();
-        logicconfig.toolconfig.desijcmd = formatCmd(config.getDesijCmd());
-        logicconfig.toolconfig.petrifycmd = formatCmd(config.getPetrifyCmd());
-        logicconfig.toolconfig.mpsatcmd = formatCmd(config.getMPSATCmd());
-        logicconfig.toolconfig.punfcmd = formatCmd(config.getPUNFCmd());
-        logicconfig.toolconfig.espressocmd = formatCmd(config.getEspressoCmd());
+        logicconfig.toolconfig.desijcmd = ConfigExportHelper.formatCmd(config.getDesijCmd());
+        logicconfig.toolconfig.petrifycmd = ConfigExportHelper.formatCmd(config.getPetrifyCmd());
+        logicconfig.toolconfig.mpsatcmd = ConfigExportHelper.formatCmd(config.getMPSATCmd());
+        logicconfig.toolconfig.punfcmd = ConfigExportHelper.formatCmd(config.getPUNFCmd());
+        logicconfig.toolconfig.espressocmd = ConfigExportHelper.formatCmd(config.getEspressoCmd());
 
         File file = new File(config.getOutputDir(), outfile);
-        if(!file.getParentFile().exists()) {
-            if(!file.getParentFile().mkdirs()) {
-                System.err.println("Failed to mkdir");
-            }
+        if(!ConfigExportHelper.writeOut(Config.class, logicconfig, file)) {
+            System.err.println("Failed to generate " + file.getAbsolutePath());
+            return;
         }
-        LogicGenerator.writeOut(logicconfig, file.getAbsolutePath());
         System.out.println("Generated " + file.getAbsolutePath());
-    }
-
-    private String formatCmd(String cmd) {
-        if(cmd.equals(Configuration.notapplicableStr)) {
-            return null;
-        }
-        return cmd;
-    }
-
-    public static boolean writeOut(Config cfg, String filename) {
-        try {
-            Writer fw = new FileWriter(filename);
-            JAXBContext context = JAXBContext.newInstance(Config.class);
-            Marshaller m = context.createMarshaller();
-            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            m.marshal(cfg, fw);
-            return true;
-        } catch(JAXBException e) {
-            System.err.println(e.getLocalizedMessage());
-            return false;
-        } catch(IOException e) {
-            System.err.println(e.getLocalizedMessage());
-            return false;
-        }
     }
 }
