@@ -112,8 +112,52 @@ public class ConfigFrame extends ParamFrame {
 
         int i = 0;
         for(Entry<TextParam, String[]> entry : Configuration.getToolsValues().entrySet()) {
-            constructTextEntry(toolsPanel, i++, entry.getKey(), entry.getValue()[0], entry.getValue()[1], true, JFileChooser.FILES_ONLY, true);
+            constructToolsEntry(toolsPanel, i++, entry.getKey(), entry.getValue()[0]);
         }
+    }
+
+    private void constructToolsEntry(JPanel panel, int row, AbstractTextParam paramName, String labelStr) {
+        constructLabelCell(panel, row, labelStr);
+        final JTextField textfield = constructTextfieldCell(panel, row, paramName, "", true);
+        final JButton pathbutton = constructPathButtonCell(panel, row, JFileChooser.FILES_ONLY, true, textfield);
+        constructToolsDefaultCheckboxCell(panel, row, paramName, textfield, pathbutton);
+    }
+
+    private void constructToolsDefaultCheckboxCell(JPanel panel, int row, final AbstractTextParam paramName, final JTextField textfield, final JButton pathbutton) {
+        JCheckBox defaultcheckbox = new JCheckBox("Use default");
+        defaultcheckbox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if(e.getStateChange() == ItemEvent.SELECTED) {
+                    final AbstractButton unixButton = buttons.get(BooleanParam.unix);
+                    final AbstractButton windowsButton = buttons.get(BooleanParam.windows);
+                    pathbutton.setEnabled(false);
+                    if(unixButton != null && windowsButton != null) {
+                        if(unixButton.isSelected()) {
+                            textfield.setText(Configuration.getToolsValues().get(paramName)[1]);
+                        } else if(windowsButton.isSelected()) {
+                            textfield.setText(Configuration.getToolsValues().get(paramName)[2]);
+                        } else {
+                            System.out.println("error");
+                        }
+                    }
+                    textfield.setEnabled(false);
+                } else if(e.getStateChange() == ItemEvent.DESELECTED) {
+                    pathbutton.setEnabled(true);
+                    textfield.setText("");
+                    textfield.setEnabled(true);
+                } else {
+                    System.out.println("error");
+                }
+            }
+        });
+        GridBagConstraints gbc_defaultcheckbox = new GridBagConstraints();
+        gbc_defaultcheckbox.anchor = GridBagConstraints.NORTHWEST;
+        gbc_defaultcheckbox.insets = new Insets(0, 0, 5, 0);
+        gbc_defaultcheckbox.gridx = 3;
+        gbc_defaultcheckbox.gridy = row;
+        panel.add(defaultcheckbox, gbc_defaultcheckbox);
+        defaultcheckbox.setSelected(true);
     }
 
     private void constructGeneratePanel(JTabbedPane tabbedPane) {
@@ -143,16 +187,25 @@ public class ConfigFrame extends ParamFrame {
         gbc_generatebutton.gridy = 7;
         gbc_generatebutton.gridwidth = 3;
         panel.add(generateButton, gbc_generatebutton);
+
+        detectOperatingSystem();
+    }
+
+    private void detectOperatingSystem() {
+        String os = System.getProperty("os.name").toLowerCase();
+        if(os.contains("win")) {
+            buttons.get(BooleanParam.windows).setSelected(true);
+            buttons.get(BooleanParam.unix).setSelected(false);
+            setWindows(true);
+        } else {
+            buttons.get(BooleanParam.windows).setSelected(false);
+            buttons.get(BooleanParam.unix).setSelected(true);
+            setUnix(true);
+        }
     }
 
     private void constructGenerateToolSection(JPanel panel) {
-        JLabel toolsLabel = new JLabel("Generate config files for");
-        GridBagConstraints gbc_toolslabel = new GridBagConstraints();
-        gbc_toolslabel.fill = GridBagConstraints.HORIZONTAL;
-        gbc_toolslabel.insets = new Insets(0, 0, 5, 5);
-        gbc_toolslabel.gridx = 0;
-        gbc_toolslabel.gridy = 2;
-        panel.add(toolsLabel, gbc_toolslabel);
+        constructLabelCell(panel, 2, "Generate config files for");
 
         AbstractButton resyncheckbox = new JCheckBox("ASGresyn");
         buttons.put(BooleanParam.resyn, resyncheckbox);
@@ -186,13 +239,7 @@ public class ConfigFrame extends ParamFrame {
     }
 
     private void constructGenerateOsSection(JPanel panel) {
-        JLabel osLabel = new JLabel("Operating system");
-        GridBagConstraints gbc_oslabel = new GridBagConstraints();
-        gbc_oslabel.fill = GridBagConstraints.HORIZONTAL;
-        gbc_oslabel.insets = new Insets(0, 0, 5, 5);
-        gbc_oslabel.gridx = 0;
-        gbc_oslabel.gridy = 0;
-        panel.add(osLabel, gbc_oslabel);
+        constructLabelCell(panel, 0, "Operating system");
 
         AbstractButton unixButton = new JRadioButton("Unix-like");
         buttons.put(BooleanParam.unix, unixButton);
@@ -200,17 +247,7 @@ public class ConfigFrame extends ParamFrame {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if(e.getStateChange() == ItemEvent.SELECTED) {
-                    for(Entry<TextParam, String[]> entry : Configuration.getToolsValues().entrySet()) {
-                        if(textfields.get(entry.getKey()).getText().equals(entry.getValue()[2])) {
-                            textfields.get(entry.getKey()).setText(entry.getValue()[1]);
-                        }
-                    }
-                    if(buttons.get(BooleanParam.resyn) != null && buttons.get(BooleanParam.logic) != null && buttons.get(BooleanParam.delaymatch) != null) {
-                        buttons.get(BooleanParam.resyn).setEnabled(true);
-                        buttons.get(BooleanParam.resyn).setSelected(true);
-                        buttons.get(BooleanParam.delaymatch).setEnabled(true);
-                        buttons.get(BooleanParam.delaymatch).setSelected(true);
-                    }
+                    setUnix(false);
                 } else if(e.getStateChange() == ItemEvent.DESELECTED) {
                 } else {
                     System.out.println("error");
@@ -231,17 +268,7 @@ public class ConfigFrame extends ParamFrame {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if(e.getStateChange() == ItemEvent.SELECTED) {
-                    for(Entry<TextParam, String[]> entry : Configuration.getToolsValues().entrySet()) {
-                        if(textfields.get(entry.getKey()).getText().equals(entry.getValue()[1])) {
-                            textfields.get(entry.getKey()).setText(entry.getValue()[2]);
-                        }
-                    }
-                    if(buttons.get(BooleanParam.resyn) != null && buttons.get(BooleanParam.logic) != null && buttons.get(BooleanParam.delaymatch) != null) {
-                        buttons.get(BooleanParam.resyn).setEnabled(false);
-                        buttons.get(BooleanParam.resyn).setSelected(false);
-                        buttons.get(BooleanParam.delaymatch).setEnabled(false);
-                        buttons.get(BooleanParam.delaymatch).setSelected(false);
-                    }
+                    setWindows(false);
                 } else if(e.getStateChange() == ItemEvent.DESELECTED) {
                 } else {
                     System.out.println("error");
@@ -260,6 +287,34 @@ public class ConfigFrame extends ParamFrame {
         group.add(windowsButton);
     }
 
+    private void setUnix(boolean enforce) {
+        for(Entry<TextParam, String[]> entry : Configuration.getToolsValues().entrySet()) {
+            if(textfields.get(entry.getKey()).getText().equals(entry.getValue()[2]) || enforce) {
+                textfields.get(entry.getKey()).setText(entry.getValue()[1]);
+            }
+        }
+        if(buttons.get(BooleanParam.resyn) != null && buttons.get(BooleanParam.logic) != null && buttons.get(BooleanParam.delaymatch) != null) {
+            buttons.get(BooleanParam.resyn).setEnabled(true);
+            buttons.get(BooleanParam.resyn).setSelected(true);
+            buttons.get(BooleanParam.delaymatch).setEnabled(true);
+            buttons.get(BooleanParam.delaymatch).setSelected(true);
+        }
+    }
+
+    private void setWindows(boolean enforce) {
+        for(Entry<TextParam, String[]> entry : Configuration.getToolsValues().entrySet()) {
+            if(textfields.get(entry.getKey()).getText().equals(entry.getValue()[1]) || enforce) {
+                textfields.get(entry.getKey()).setText(entry.getValue()[2]);
+            }
+        }
+        if(buttons.get(BooleanParam.resyn) != null && buttons.get(BooleanParam.logic) != null && buttons.get(BooleanParam.delaymatch) != null) {
+            buttons.get(BooleanParam.resyn).setEnabled(false);
+            buttons.get(BooleanParam.resyn).setSelected(false);
+            buttons.get(BooleanParam.delaymatch).setEnabled(false);
+            buttons.get(BooleanParam.delaymatch).setSelected(false);
+        }
+    }
+
     private void constructPasswordEntry(JPanel panel, int row, AbstractTextParam paramName, String labelStr, final String defaultvalue) {
         constructLabelCell(panel, row, labelStr);
 
@@ -276,5 +331,4 @@ public class ConfigFrame extends ParamFrame {
         text.setText(defaultvalue);
         text.setEnabled(true);
     }
-
 }
