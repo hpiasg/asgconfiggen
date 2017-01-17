@@ -22,6 +22,7 @@ package de.uni_potsdam.hpi.asg.configgen.generators;
 import java.io.File;
 
 import de.uni_potsdam.hpi.asg.configgen.Configuration;
+import de.uni_potsdam.hpi.asg.configgen.Configuration.TextParam;
 import de.uni_potsdam.hpi.asg.logictool.io.Config;
 import de.uni_potsdam.hpi.asg.logictool.io.ToolConfig;
 
@@ -38,13 +39,13 @@ public class LogicGenerator {
         Config logicconfig = new Config();
         logicconfig.workdir = "";
         logicconfig.toolconfig = new ToolConfig();
-        logicconfig.toolconfig.desijcmd = ConfigExportHelper.formatCmd(config.getDesijCmd());
-        logicconfig.toolconfig.petrifycmd = ConfigExportHelper.formatCmd(config.getPetrifyCmd());
-        logicconfig.toolconfig.mpsatcmd = ConfigExportHelper.formatCmd(config.getMPSATCmd());
-        logicconfig.toolconfig.punfcmd = ConfigExportHelper.formatCmd(config.getPUNFCmd());
-        logicconfig.toolconfig.espressocmd = ConfigExportHelper.formatCmd(config.getEspressoCmd());
+        logicconfig.toolconfig.desijcmd = ConfigExportHelper.formatCmd(config.getTextValue(TextParam.DesiJ));
+        logicconfig.toolconfig.petrifycmd = ConfigExportHelper.formatCmd(config.getTextValue(TextParam.Petrify));
+        logicconfig.toolconfig.mpsatcmd = ConfigExportHelper.formatCmd(config.getTextValue(TextParam.MPSAT));
+        logicconfig.toolconfig.punfcmd = ConfigExportHelper.formatCmd(config.getTextValue(TextParam.PUNF));
+        logicconfig.toolconfig.espressocmd = ConfigExportHelper.formatCmd(config.getTextValue(TextParam.Espresso));
 
-        File file = new File(config.getOutputDir(), outfile);
+        File file = new File(config.getTextValue(TextParam.OutDir), outfile);
         if(!ConfigExportHelper.writeOut(Config.class, logicconfig, file)) {
             System.err.println("Failed to generate " + file.getAbsolutePath());
             return;

@@ -22,22 +22,39 @@ package de.uni_potsdam.hpi.asg.configgen;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Configuration {
-    public static String                 notapplicableStr = "N/A";
+import de.uni_potsdam.hpi.asg.common.gui.ParamFrame.AbstractBooleanParam;
+import de.uni_potsdam.hpi.asg.common.gui.ParamFrame.AbstractTextParam;
 
-    private static String[]              remoteStrings    = {"Hostname", "Username", "Password", "Working directory"};
-    private static Map<String, String[]> defaultvalues;
+public class Configuration {
+    public static String notapplicableStr = "N/A";
+
+    //@formatter:off
+    public enum TextParam implements AbstractTextParam {
+        /*remote*/ Hostname, Username, Password, WorkingDir,
+        /*tools*/ DesiJ, BalsaC, BalsaNetlist, Petrify, PUNF, MPSAT, Petreset, ASGlogic, Espresso,
+        /*generate*/ OutDir
+    }
+
+    public enum BooleanParam implements AbstractBooleanParam {
+        /*remote*/ 
+        /*tools*/ 
+        /*generate*/ unix, windows, resyn, logic, delaymatch
+    }
+    //@formatter:on
+
+    private static String[]                 remoteStrings = {"Hostname", "Username", "Password", "Working directory"};
+    private static Map<TextParam, String[]> toolsValues;
     static {
-        defaultvalues = new LinkedHashMap<>();
-        defaultvalues.put("DesiJ", new String[]{"$BASEDIR/bin/DesiJ", "$BASEDIR/bin/DesiJ.bat"});
-        defaultvalues.put("Balsa-c", new String[]{"$BASEDIR/tools/balsa/bin/balsa-c", notapplicableStr});
-        defaultvalues.put("Balsa-netlist", new String[]{"$BASEDIR/tools/balsa/bin/balsa-netlist", notapplicableStr});
-        defaultvalues.put("Petrify", new String[]{"$BASEDIR/tools/petrify/petrify", "$BASEDIR/tools/petrify/petrify.exe"});
-        defaultvalues.put("PUNF", new String[]{"$BASEDIR/tools/punf/punf", "$BASEDIR/tools/punf/punf.exe"});
-        defaultvalues.put("MPSAT", new String[]{"$BASEDIR/tools/mpsat/mpsat", "$BASEDIR/tools/mpsat/mpsat.exe"});
-        defaultvalues.put("Petreset", new String[]{notapplicableStr, notapplicableStr});
-        defaultvalues.put("ASGlogic", new String[]{"$BASEDIR/bin/ASGlogic", "$BASEDIR/bin/ASGlogic.bat"});
-        defaultvalues.put("Espresso", new String[]{"$BASEDIR/tools/espresso/espresso", "$BASEDIR/tools/espresso/espresso.exe"});
+        toolsValues = new LinkedHashMap<>();
+        toolsValues.put(TextParam.DesiJ, new String[]{"DesiJ", "$BASEDIR/bin/DesiJ", "$BASEDIR/bin/DesiJ.bat"});
+        toolsValues.put(TextParam.BalsaC, new String[]{"Balsa-c", "$BASEDIR/tools/balsa/bin/balsa-c", notapplicableStr});
+        toolsValues.put(TextParam.BalsaNetlist, new String[]{"Balsa-netlist", "$BASEDIR/tools/balsa/bin/balsa-netlist", notapplicableStr});
+        toolsValues.put(TextParam.Petrify, new String[]{"Petrify", "$BASEDIR/tools/petrify/petrify", "$BASEDIR/tools/petrify/petrify.exe"});
+        toolsValues.put(TextParam.PUNF, new String[]{"PUNF", "$BASEDIR/tools/punf/punf", "$BASEDIR/tools/punf/punf.exe"});
+        toolsValues.put(TextParam.MPSAT, new String[]{"MPSAT", "$BASEDIR/tools/mpsat/mpsat", "$BASEDIR/tools/mpsat/mpsat.exe"});
+        toolsValues.put(TextParam.Petreset, new String[]{"Petreset", notapplicableStr, notapplicableStr});
+        toolsValues.put(TextParam.ASGlogic, new String[]{"ASGlogic", "$BASEDIR/bin/ASGlogic", "$BASEDIR/bin/ASGlogic.bat"});
+        toolsValues.put(TextParam.Espresso, new String[]{"Espresso", "$BASEDIR/tools/espresso/espresso", "$BASEDIR/tools/espresso/espresso.exe"});
     }
 
     private ConfigFrame frame;
@@ -46,88 +63,24 @@ public class Configuration {
         this.frame = frame;
     }
 
-    public static Map<String, String[]> getDefaultvalues() {
-        return defaultvalues;
+    public static Map<TextParam, String[]> getToolsValues() {
+        return toolsValues;
     }
 
     public static String[] getRemoteStrings() {
         return remoteStrings;
     }
 
-    public String getDesijCmd() {
-        return frame.getEntryValue("DesiJ");
+    public String getTextValue(TextParam param) {
+        String str = frame.getTextValue(param);
+        if(param == TextParam.OutDir) {
+            str = replaceBasedir(str);
+        }
+        return str;
     }
 
-    public String getBalsaCCmd() {
-        return frame.getEntryValue("Balsa-c");
-    }
-
-    public String getBalsaNetlistCmd() {
-        return frame.getEntryValue("Balsa-netlist");
-    }
-
-    public String getPetrifyCmd() {
-        return frame.getEntryValue("Petrify");
-    }
-
-    public String getPUNFCmd() {
-        return frame.getEntryValue("PUNF");
-    }
-
-    public String getMPSATCmd() {
-        return frame.getEntryValue("MPSAT");
-    }
-
-    public String getPetresetCmd() {
-        return frame.getEntryValue("Petreset");
-    }
-
-    public String getASGlogicCmd() {
-        return frame.getEntryValue("ASGlogic");
-    }
-
-    public String getEspressoCmd() {
-        return frame.getEntryValue("Espresso");
-    }
-
-    public String getRemoteHostname() {
-        return frame.getEntryValue("Hostname");
-    }
-
-    public String getRemoteUsername() {
-        return frame.getEntryValue("Username");
-    }
-
-    public String getRemotePassword() {
-        return frame.getEntryValue("Password");
-    }
-
-    public String getRemotWorkingDirectory() {
-        return frame.getEntryValue("Working directory");
-    }
-
-    public boolean isUnixSelected() {
-        return frame.isUnixSelected();
-    }
-
-    public boolean isWindowsSelected() {
-        return frame.isWindowsSelected();
-    }
-
-    public boolean isResynSelected() {
-        return frame.isResynSelected();
-    }
-
-    public boolean isLogicSelected() {
-        return frame.isLogicSelected();
-    }
-
-    public boolean isDelayMatchSelected() {
-        return frame.isDelayMatchSelected();
-    }
-
-    public String getOutputDir() {
-        return replaceBasedir(frame.getOutputDir());
+    public boolean getBooleanValue(BooleanParam param) {
+        return frame.getBooleanValue(param);
     }
 
     private String replaceBasedir(String str) {

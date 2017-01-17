@@ -22,6 +22,7 @@ package de.uni_potsdam.hpi.asg.configgen.generators;
 import java.io.File;
 
 import de.uni_potsdam.hpi.asg.configgen.Configuration;
+import de.uni_potsdam.hpi.asg.configgen.Configuration.TextParam;
 import de.uni_potsdam.hpi.asg.resyntool.io.Config;
 import de.uni_potsdam.hpi.asg.resyntool.io.RemoteInvocation;
 import de.uni_potsdam.hpi.asg.resyntool.io.ToolConfig;
@@ -40,21 +41,21 @@ public class ResynGenerator {
         resynconfig.componentconfig = "";
         resynconfig.workdir = "";
         resynconfig.toolconfig = new ToolConfig();
-        resynconfig.toolconfig.desijcmd = ConfigExportHelper.formatCmd(config.getDesijCmd());
-        resynconfig.toolconfig.balsaccmd = ConfigExportHelper.formatCmd(config.getBalsaCCmd());
-        resynconfig.toolconfig.balsanetlistcmd = ConfigExportHelper.formatCmd(config.getBalsaNetlistCmd());
-        resynconfig.toolconfig.petrifycmd = ConfigExportHelper.formatCmd(config.getPetrifyCmd());
-        resynconfig.toolconfig.petresetcmd = ConfigExportHelper.formatCmd(config.getPetresetCmd());
-        resynconfig.toolconfig.mpsatcmd = ConfigExportHelper.formatCmd(config.getMPSATCmd());
-        resynconfig.toolconfig.punfcmd = ConfigExportHelper.formatCmd(config.getPUNFCmd());
-        resynconfig.toolconfig.asglogiccmd = ConfigExportHelper.formatCmd(config.getASGlogicCmd());
+        resynconfig.toolconfig.desijcmd = ConfigExportHelper.formatCmd(config.getTextValue(TextParam.DesiJ));
+        resynconfig.toolconfig.balsaccmd = ConfigExportHelper.formatCmd(config.getTextValue(TextParam.BalsaC));
+        resynconfig.toolconfig.balsanetlistcmd = ConfigExportHelper.formatCmd(config.getTextValue(TextParam.BalsaNetlist));
+        resynconfig.toolconfig.petrifycmd = ConfigExportHelper.formatCmd(config.getTextValue(TextParam.Petrify));
+        resynconfig.toolconfig.petresetcmd = ConfigExportHelper.formatCmd(config.getTextValue(TextParam.Petreset));
+        resynconfig.toolconfig.mpsatcmd = ConfigExportHelper.formatCmd(config.getTextValue(TextParam.MPSAT));
+        resynconfig.toolconfig.punfcmd = ConfigExportHelper.formatCmd(config.getTextValue(TextParam.PUNF));
+        resynconfig.toolconfig.asglogiccmd = ConfigExportHelper.formatCmd(config.getTextValue(TextParam.ASGlogic));
         resynconfig.toolconfig.designCompilerCmd = new RemoteInvocation();
-        resynconfig.toolconfig.designCompilerCmd.hostname = config.getRemoteHostname();
-        resynconfig.toolconfig.designCompilerCmd.username = config.getRemoteUsername();
-        resynconfig.toolconfig.designCompilerCmd.password = config.getRemotePassword();
-        resynconfig.toolconfig.designCompilerCmd.workingdir = config.getRemotWorkingDirectory();
+        resynconfig.toolconfig.designCompilerCmd.hostname = config.getTextValue(TextParam.Hostname);
+        resynconfig.toolconfig.designCompilerCmd.username = config.getTextValue(TextParam.Username);
+        resynconfig.toolconfig.designCompilerCmd.password = config.getTextValue(TextParam.Password);
+        resynconfig.toolconfig.designCompilerCmd.workingdir = config.getTextValue(TextParam.WorkingDir);
 
-        File file = new File(config.getOutputDir(), outfile);
+        File file = new File(config.getTextValue(TextParam.OutDir), outfile);
         if(!ConfigExportHelper.writeOut(Config.class, resynconfig, file)) {
             System.err.println("Failed to generate " + file.getAbsolutePath());
             return;

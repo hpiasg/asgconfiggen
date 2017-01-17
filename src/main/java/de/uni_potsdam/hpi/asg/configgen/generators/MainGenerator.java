@@ -20,6 +20,7 @@ package de.uni_potsdam.hpi.asg.configgen.generators;
  */
 
 import de.uni_potsdam.hpi.asg.configgen.Configuration;
+import de.uni_potsdam.hpi.asg.configgen.Configuration.BooleanParam;
 
 public class MainGenerator {
 
@@ -30,15 +31,15 @@ public class MainGenerator {
     }
 
     public void generate() {
-        if(config.isResynSelected()) {
+        if(config.getBooleanValue(BooleanParam.resyn)) {
             ResynGenerator rgen = new ResynGenerator(config);
             rgen.generate();
         }
-        if(config.isLogicSelected()) {
+        if(config.getBooleanValue(BooleanParam.logic)) {
             LogicGenerator lgen = new LogicGenerator(config);
             lgen.generate();
         }
-        if(config.isDelayMatchSelected()) {
+        if(config.getBooleanValue(BooleanParam.delaymatch)) {
             DelayMatchGenerator dmgen = new DelayMatchGenerator(config);
             dmgen.generate();
         }

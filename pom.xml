@@ -43,6 +43,7 @@ along with ASGconfiggen.  If not, see <http://www.gnu.org/licenses/>.
 	</licenses>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<common.version>2.1.0-SNAPSHOT</common.version>
 		<logic.version>0.1.4</logic.version>
 		<resyn.version>1.1.1</resyn.version>
 		<delay.version>1.2.1</delay.version>
@@ -124,6 +125,7 @@ along with ASGconfiggen.  If not, see <http://www.gnu.org/licenses/>.
 									<include>de.uni_potsdam.hpi.asg:asglogic:jar:</include>
 									<include>de.uni_potsdam.hpi.asg:asgresyn:jar:</include>
 									<include>de.uni_potsdam.hpi.asg:asgdelaymatch:jar:</include>
+									<include>de.uni_potsdam.hpi.asg:asgcommon:jar:</include>
 								</includes>
 							</artifactSet>
 							<filters>
@@ -148,6 +150,12 @@ along with ASGconfiggen.  If not, see <http://www.gnu.org/licenses/>.
 										<include>de/uni_potsdam/hpi/asg/delaymatch/io/Config.class</include>
 										<include>de/uni_potsdam/hpi/asg/delaymatch/io/ToolConfig.class</include>
 										<include>de/uni_potsdam/hpi/asg/delaymatch/io/RemoteInvocation.class</include>
+									</includes>
+								</filter>
+								<filter>
+									<artifact>de.uni_potsdam.hpi.asg:asgcommon</artifact>
+									<includes>
+										<include>de/uni_potsdam/hpi/asg/common/gui/*</include>
 									</includes>
 								</filter>
 							</filters>
@@ -296,6 +304,11 @@ along with ASGconfiggen.  If not, see <http://www.gnu.org/licenses/>.
 			<groupId>de.uni_potsdam.hpi.asg</groupId>
 			<artifactId>asgdelaymatch</artifactId>
 			<version>${delay.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>de.uni_potsdam.hpi.asg</groupId>
+			<artifactId>asgcommon</artifactId>
+			<version>${common.version}</version>
 		</dependency>
 	</dependencies>
 </project>

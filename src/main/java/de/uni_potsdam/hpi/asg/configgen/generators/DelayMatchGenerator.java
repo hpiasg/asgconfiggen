@@ -22,6 +22,7 @@ package de.uni_potsdam.hpi.asg.configgen.generators;
 import java.io.File;
 
 import de.uni_potsdam.hpi.asg.configgen.Configuration;
+import de.uni_potsdam.hpi.asg.configgen.Configuration.TextParam;
 import de.uni_potsdam.hpi.asg.delaymatch.io.Config;
 import de.uni_potsdam.hpi.asg.delaymatch.io.RemoteInvocation;
 import de.uni_potsdam.hpi.asg.delaymatch.io.ToolConfig;
@@ -40,12 +41,12 @@ public class DelayMatchGenerator {
         delaymatchconfig.workdir = "";
         delaymatchconfig.toolconfig = new ToolConfig();
         delaymatchconfig.toolconfig.designCompilerCmd = new RemoteInvocation();
-        delaymatchconfig.toolconfig.designCompilerCmd.hostname = config.getRemoteHostname();
-        delaymatchconfig.toolconfig.designCompilerCmd.username = config.getRemoteUsername();
-        delaymatchconfig.toolconfig.designCompilerCmd.password = config.getRemotePassword();
-        delaymatchconfig.toolconfig.designCompilerCmd.workingdir = config.getRemotWorkingDirectory();
+        delaymatchconfig.toolconfig.designCompilerCmd.hostname = config.getTextValue(TextParam.Hostname);
+        delaymatchconfig.toolconfig.designCompilerCmd.username = config.getTextValue(TextParam.Username);
+        delaymatchconfig.toolconfig.designCompilerCmd.password = config.getTextValue(TextParam.Password);
+        delaymatchconfig.toolconfig.designCompilerCmd.workingdir = config.getTextValue(TextParam.WorkingDir);
 
-        File file = new File(config.getOutputDir(), outfile);
+        File file = new File(config.getTextValue(TextParam.OutDir), outfile);
         if(!ConfigExportHelper.writeOut(Config.class, delaymatchconfig, file)) {
             System.err.println("Failed to generate " + file.getAbsolutePath());
             return;
