@@ -42,12 +42,14 @@ import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
-import de.uni_potsdam.hpi.asg.common.gui.ParamFrame;
+import de.uni_potsdam.hpi.asg.common.gui.PropertiesFrame;
+import de.uni_potsdam.hpi.asg.common.gui.PropertiesPanel;
+import de.uni_potsdam.hpi.asg.common.gui.PropertiesPanel.AbstractTextParam;
 import de.uni_potsdam.hpi.asg.configgen.Configuration.BooleanParam;
 import de.uni_potsdam.hpi.asg.configgen.Configuration.TextParam;
 import de.uni_potsdam.hpi.asg.configgen.generators.MainGenerator;
 
-public class ConfigFrame extends ParamFrame {
+public class ConfigFrame extends PropertiesFrame {
     private static final long serialVersionUID = -4879956586784429087L;
 
     private Configuration     config;
@@ -67,7 +69,7 @@ public class ConfigFrame extends ParamFrame {
     }
 
     private void constructRemotePanel(JTabbedPane tabbedPane) {
-        JPanel remotePanel = new JPanel();
+        PropertiesPanel remotePanel = new PropertiesPanel(this);
         tabbedPane.addTab("Remote login", null, remotePanel, null);
         GridBagLayout gbl_remotepanel = new GridBagLayout();
         gbl_remotepanel.columnWidths = new int[]{150, 200, 0};
@@ -85,10 +87,10 @@ public class ConfigFrame extends ParamFrame {
         gbc_whylabel.gridy = 0;
         remotePanel.add(whyLabel, gbc_whylabel);
 
-        constructTextEntry(remotePanel, 2, TextParam.Hostname, Configuration.getRemoteStrings()[0], "", false, null, false);
-        constructTextEntry(remotePanel, 3, TextParam.Username, Configuration.getRemoteStrings()[1], "", false, null, false);
-        constructPasswordEntry(remotePanel, 4, TextParam.Password, Configuration.getRemoteStrings()[2], "");
-        constructTextEntry(remotePanel, 5, TextParam.WorkingDir, Configuration.getRemoteStrings()[3], "", false, null, false);
+        remotePanel.addTextEntry(2, TextParam.Hostname, Configuration.getRemoteStrings()[0], "", false, null, false);
+        remotePanel.addTextEntry(3, TextParam.Username, Configuration.getRemoteStrings()[1], "", false, null, false);
+        addPasswordEntry(remotePanel, 4, TextParam.Password, Configuration.getRemoteStrings()[2], "");
+        remotePanel.addTextEntry(5, TextParam.WorkingDir, Configuration.getRemoteStrings()[3], "", false, null, false);
 
         JLabel warningLabel = new JLabel("! Note that passwords will be stored in the config file as plain text !");
         GridBagConstraints gbc_warning = new GridBagConstraints();
@@ -98,10 +100,12 @@ public class ConfigFrame extends ParamFrame {
         gbc_warning.gridwidth = 2;
         gbc_warning.gridy = 7;
         remotePanel.add(warningLabel, gbc_warning);
+
+        getDataFromPanel(remotePanel);
     }
 
     private void constructToolsPanel(JTabbedPane tabbedPane) {
-        JPanel toolsPanel = new JPanel();
+        PropertiesPanel toolsPanel = new PropertiesPanel(this);
         tabbedPane.addTab("External tools", null, toolsPanel, null);
         GridBagLayout gbl_toolspanel = new GridBagLayout();
         gbl_toolspanel.columnWidths = new int[]{100, 300, 50, 100, 0};
@@ -114,12 +118,14 @@ public class ConfigFrame extends ParamFrame {
         for(Entry<TextParam, String[]> entry : Configuration.getToolsValues().entrySet()) {
             constructToolsEntry(toolsPanel, i++, entry.getKey(), entry.getValue()[0]);
         }
+
+        getDataFromPanel(toolsPanel);
     }
 
-    private void constructToolsEntry(JPanel panel, int row, AbstractTextParam paramName, String labelStr) {
-        constructLabelCell(panel, row, labelStr);
-        final JTextField textfield = constructTextfieldCell(panel, row, paramName, "", true);
-        final JButton pathbutton = constructPathButtonCell(panel, row, JFileChooser.FILES_ONLY, true, textfield);
+    private void constructToolsEntry(PropertiesPanel panel, int row, AbstractTextParam paramName, String labelStr) {
+        panel.addLabelCell(row, labelStr);
+        final JTextField textfield = panel.addTextfieldCell(row, paramName, "", true);
+        final JButton pathbutton = panel.addPathButtonCell(row, JFileChooser.FILES_ONLY, true, textfield);
         constructToolsDefaultCheckboxCell(panel, row, paramName, textfield, pathbutton);
     }
 
@@ -161,7 +167,7 @@ public class ConfigFrame extends ParamFrame {
     }
 
     private void constructGeneratePanel(JTabbedPane tabbedPane) {
-        JPanel panel = new JPanel();
+        PropertiesPanel panel = new PropertiesPanel(this);
         tabbedPane.addTab("Generate", null, panel, null);
         GridBagLayout gbl_genpanel = new GridBagLayout();
         gbl_genpanel.columnWidths = new int[]{170, 300, 50, 80, 0};
@@ -172,7 +178,7 @@ public class ConfigFrame extends ParamFrame {
 
         constructGenerateOsSection(panel);
         constructGenerateToolSection(panel);
-        constructTextEntry(panel, 5, TextParam.OutDir, "Output directory", "$BASEDIR/config", true, JFileChooser.DIRECTORIES_ONLY, true);
+        panel.addTextEntry(5, TextParam.OutDir, "Output directory", "$BASEDIR/config", true, JFileChooser.DIRECTORIES_ONLY, true);
 
         final JButton generateButton = new JButton("Generate");
         generateButton.addActionListener(new ActionListener() {
@@ -188,6 +194,7 @@ public class ConfigFrame extends ParamFrame {
         gbc_generatebutton.gridwidth = 3;
         panel.add(generateButton, gbc_generatebutton);
 
+        getDataFromPanel(panel);
         detectOperatingSystem();
     }
 
@@ -204,8 +211,8 @@ public class ConfigFrame extends ParamFrame {
         }
     }
 
-    private void constructGenerateToolSection(JPanel panel) {
-        constructLabelCell(panel, 2, "Generate config files for");
+    private void constructGenerateToolSection(PropertiesPanel panel) {
+        panel.addLabelCell(2, "Generate config files for");
 
         AbstractButton resyncheckbox = new JCheckBox("ASGresyn");
         buttons.put(BooleanParam.resyn, resyncheckbox);
@@ -238,8 +245,8 @@ public class ConfigFrame extends ParamFrame {
         dmcheckbox.setSelected(true);
     }
 
-    private void constructGenerateOsSection(JPanel panel) {
-        constructLabelCell(panel, 0, "Operating system");
+    private void constructGenerateOsSection(PropertiesPanel panel) {
+        panel.addLabelCell(0, "Operating system");
 
         AbstractButton unixButton = new JRadioButton("Unix-like");
         buttons.put(BooleanParam.unix, unixButton);
@@ -315,8 +322,8 @@ public class ConfigFrame extends ParamFrame {
         }
     }
 
-    private void constructPasswordEntry(JPanel panel, int row, AbstractTextParam paramName, String labelStr, final String defaultvalue) {
-        constructLabelCell(panel, row, labelStr);
+    private void addPasswordEntry(PropertiesPanel panel, int row, AbstractTextParam paramName, String labelStr, final String defaultvalue) {
+        panel.addLabelCell(row, labelStr);
 
         JTextField text = new JPasswordField();
         textfields.put(paramName, text);
