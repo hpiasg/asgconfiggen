@@ -178,7 +178,7 @@ public class ConfigFrame extends PropertiesFrame {
 
         constructGenerateOsSection(panel);
         constructGenerateToolSection(panel);
-        panel.addTextEntry(5, TextParam.OutDir, "Output directory", "$BASEDIR/config", true, JFileChooser.DIRECTORIES_ONLY, true);
+        panel.addTextEntry(5, TextParam.OutDir, "Output directory", ConfigGenMain.defaultConfigDir, true, JFileChooser.DIRECTORIES_ONLY, true);
 
         final JButton generateButton = new JButton("Generate");
         generateButton.addActionListener(new ActionListener() {
@@ -191,7 +191,7 @@ public class ConfigFrame extends PropertiesFrame {
         gbc_generatebutton.insets = new Insets(0, 0, 5, 5);
         gbc_generatebutton.gridx = 0;
         gbc_generatebutton.gridy = 7;
-        gbc_generatebutton.gridwidth = 3;
+        gbc_generatebutton.gridwidth = 4;
         panel.add(generateButton, gbc_generatebutton);
 
         getDataFromPanel(panel);
