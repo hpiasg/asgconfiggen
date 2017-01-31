@@ -32,7 +32,6 @@ import de.uni_potsdam.hpi.asg.common.technology.TechnologyDirectory;
 
 public class Configuration {
     public static String notapplicableStr = "N/A";
-    public static String unsetStr         = "$UNSET";
 
     //@formatter:off
     public enum TextParam implements AbstractTextParam {
@@ -44,7 +43,7 @@ public class Configuration {
     public enum BooleanParam implements AbstractBooleanParam {
         /*remote*/ 
         /*tools*/ 
-        /*generate*/ unix, windows, resyn, logic, delaymatch, defaultTechActivated
+        /*generate*/ unix, windows, resyn, logic, delaymatch, defaultTechDeActivated
     }
     
     public enum EnumParam implements AbstractEnumParam {
@@ -67,11 +66,11 @@ public class Configuration {
         toolsValues.put(TextParam.Espresso, new String[]{"Espresso", "$BASEDIR/tools/espresso/espresso", "$BASEDIR/tools/espresso/espresso.exe"});
     }
 
-    private ConfigFrame         frame;
-    private TechnologyDirectory techDir;
+    private ConfigFrame frame;
+    private String[]    techs;
 
     public Configuration(TechnologyDirectory techDir) {
-        this.techDir = techDir;
+        this.techs = getAvailableTechs(techDir);
     }
 
     public void setFrame(ConfigFrame frame) {
@@ -86,7 +85,7 @@ public class Configuration {
         return remoteStrings;
     }
 
-    public String[] getAvailableTechs() {
+    private String[] getAvailableTechs(TechnologyDirectory techDir) {
         if(techDir.getTechs().isEmpty()) {
             return null;
         }
@@ -100,6 +99,10 @@ public class Configuration {
         return techs.toArray(retVal);
     }
 
+    public String[] getAvailableTechs() {
+        return techs;
+    }
+
     public String getTextValue(TextParam param) {
         String str = frame.getTextValue(param);
         if(param == TextParam.OutDir) {
@@ -110,6 +113,16 @@ public class Configuration {
 
     public boolean getBooleanValue(BooleanParam param) {
         return frame.getBooleanValue(param);
+    }
+
+    public String getEnumValue(EnumParam param) {
+        int index = frame.getEnumValue(param);
+        switch(param) {
+            case defaultTech:
+                return techs[index];
+            default:
+                return null;
+        }
     }
 
     private String replaceBasedir(String str) {

@@ -216,7 +216,7 @@ public class ConfigFrame extends PropertiesFrame {
 
         panel.addLabelCell(row, "Default technology");
         JComboBox<String> combobox = addComboBoxCell(panel, row, EnumParam.defaultTech, techs);
-        addDefaultTechCheckboxCell(panel, row, BooleanParam.defaultTechActivated, combobox, unsetDesectable);
+        addDefaultTechCheckboxCell(panel, row, BooleanParam.defaultTechDeActivated, combobox, unsetDesectable);
     }
 
     private JComboBox<String> addComboBoxCell(PropertiesPanel panel, int row, EnumParam paramName, String[] values) {
@@ -238,7 +238,7 @@ public class ConfigFrame extends PropertiesFrame {
 
     private void addDefaultTechCheckboxCell(PropertiesPanel panel, int row, BooleanParam paramName, final JComboBox<String> combobox, boolean unsetDesectable) {
         JCheckBox checkbox = new JCheckBox("Unset");
-        buttons.put(BooleanParam.defaultTechActivated, checkbox);
+        buttons.put(BooleanParam.defaultTechDeActivated, checkbox);
         checkbox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
