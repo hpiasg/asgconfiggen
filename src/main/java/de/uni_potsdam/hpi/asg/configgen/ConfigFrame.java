@@ -80,6 +80,7 @@ public class ConfigFrame extends PropertiesFrame {
 
         JLabel whyLabel = new JLabel("<html><body>We assume that proprietary tools (like Design Compiler) are located<br>on a dedicated server. Please provide the appropiate login data:</body></html>");
         GridBagConstraints gbc_whylabel = new GridBagConstraints();
+        gbc_whylabel.anchor = GridBagConstraints.LINE_START;
         gbc_whylabel.fill = GridBagConstraints.HORIZONTAL;
         gbc_whylabel.insets = new Insets(0, 0, 5, 5);
         gbc_whylabel.gridx = 0;
@@ -94,6 +95,7 @@ public class ConfigFrame extends PropertiesFrame {
 
         JLabel warningLabel = new JLabel("! Note that passwords will be stored in the config file as plain text !");
         GridBagConstraints gbc_warning = new GridBagConstraints();
+        gbc_warning.anchor = GridBagConstraints.LINE_START;
         gbc_warning.fill = GridBagConstraints.HORIZONTAL;
         gbc_warning.insets = new Insets(0, 0, 5, 5);
         gbc_warning.gridx = 0;
@@ -158,7 +160,7 @@ public class ConfigFrame extends PropertiesFrame {
             }
         });
         GridBagConstraints gbc_defaultcheckbox = new GridBagConstraints();
-        gbc_defaultcheckbox.anchor = GridBagConstraints.NORTHWEST;
+        gbc_defaultcheckbox.anchor = GridBagConstraints.LINE_START;
         gbc_defaultcheckbox.insets = new Insets(0, 0, 5, 0);
         gbc_defaultcheckbox.gridx = 3;
         gbc_defaultcheckbox.gridy = row;
@@ -188,6 +190,7 @@ public class ConfigFrame extends PropertiesFrame {
             }
         });
         GridBagConstraints gbc_generatebutton = new GridBagConstraints();
+        gbc_generatebutton.anchor = GridBagConstraints.CENTER;
         gbc_generatebutton.insets = new Insets(0, 0, 5, 5);
         gbc_generatebutton.gridx = 0;
         gbc_generatebutton.gridy = 7;
@@ -217,6 +220,7 @@ public class ConfigFrame extends PropertiesFrame {
         AbstractButton resyncheckbox = new JCheckBox("ASGresyn");
         buttons.put(BooleanParam.resyn, resyncheckbox);
         GridBagConstraints gbc_resyncheckbox = new GridBagConstraints();
+        gbc_resyncheckbox.anchor = GridBagConstraints.LINE_START;
         gbc_resyncheckbox.anchor = GridBagConstraints.NORTHWEST;
         gbc_resyncheckbox.insets = new Insets(0, 0, 5, 0);
         gbc_resyncheckbox.gridx = 1;
@@ -227,6 +231,7 @@ public class ConfigFrame extends PropertiesFrame {
         AbstractButton logiccheckbox = new JCheckBox("ASGlogic");
         buttons.put(BooleanParam.logic, logiccheckbox);
         GridBagConstraints gbc_logiccheckbox = new GridBagConstraints();
+        gbc_logiccheckbox.anchor = GridBagConstraints.LINE_START;
         gbc_logiccheckbox.anchor = GridBagConstraints.NORTHWEST;
         gbc_logiccheckbox.insets = new Insets(0, 0, 5, 0);
         gbc_logiccheckbox.gridx = 1;
@@ -237,6 +242,7 @@ public class ConfigFrame extends PropertiesFrame {
         AbstractButton dmcheckbox = new JCheckBox("ASGdelaymatch");
         buttons.put(BooleanParam.delaymatch, dmcheckbox);
         GridBagConstraints gbc_dmcheckbox = new GridBagConstraints();
+        gbc_dmcheckbox.anchor = GridBagConstraints.LINE_START;
         gbc_dmcheckbox.anchor = GridBagConstraints.NORTHWEST;
         gbc_dmcheckbox.insets = new Insets(0, 0, 5, 0);
         gbc_dmcheckbox.gridx = 1;
@@ -262,6 +268,7 @@ public class ConfigFrame extends PropertiesFrame {
             }
         });
         GridBagConstraints gbc_unixButton = new GridBagConstraints();
+        gbc_unixButton.anchor = GridBagConstraints.LINE_START;
         gbc_unixButton.fill = GridBagConstraints.HORIZONTAL;
         gbc_unixButton.insets = new Insets(0, 0, 5, 5);
         gbc_unixButton.gridx = 1;
@@ -283,6 +290,7 @@ public class ConfigFrame extends PropertiesFrame {
             }
         });
         GridBagConstraints gbc_windowsButton = new GridBagConstraints();
+        gbc_windowsButton.anchor = GridBagConstraints.LINE_START;
         gbc_windowsButton.fill = GridBagConstraints.HORIZONTAL;
         gbc_windowsButton.insets = new Insets(0, 0, 5, 5);
         gbc_windowsButton.gridx = 1;
@@ -329,6 +337,7 @@ public class ConfigFrame extends PropertiesFrame {
         textfields.put(paramName, text);
 
         GridBagConstraints gbc_text = new GridBagConstraints();
+        gbc_text.anchor = GridBagConstraints.LINE_START;
         gbc_text.fill = GridBagConstraints.HORIZONTAL;
         gbc_text.insets = new Insets(0, 0, 5, 5);
         gbc_text.gridx = 1;
