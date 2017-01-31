@@ -19,14 +19,20 @@ package de.uni_potsdam.hpi.asg.configgen;
  * along with ASGconfiggen.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import de.uni_potsdam.hpi.asg.common.gui.PropertiesPanel.AbstractBooleanParam;
+import de.uni_potsdam.hpi.asg.common.gui.PropertiesPanel.AbstractEnumParam;
 import de.uni_potsdam.hpi.asg.common.gui.PropertiesPanel.AbstractTextParam;
+import de.uni_potsdam.hpi.asg.common.technology.Technology;
+import de.uni_potsdam.hpi.asg.common.technology.TechnologyDirectory;
 
 public class Configuration {
     public static String notapplicableStr = "N/A";
+    public static String unsetStr         = "$UNSET";
 
     //@formatter:off
     public enum TextParam implements AbstractTextParam {
@@ -38,7 +44,11 @@ public class Configuration {
     public enum BooleanParam implements AbstractBooleanParam {
         /*remote*/ 
         /*tools*/ 
-        /*generate*/ unix, windows, resyn, logic, delaymatch
+        /*generate*/ unix, windows, resyn, logic, delaymatch, defaultTechActivated
+    }
+    
+    public enum EnumParam implements AbstractEnumParam {
+        /*generate*/ defaultTech
     }
     //@formatter:on
 
@@ -57,7 +67,12 @@ public class Configuration {
         toolsValues.put(TextParam.Espresso, new String[]{"Espresso", "$BASEDIR/tools/espresso/espresso", "$BASEDIR/tools/espresso/espresso.exe"});
     }
 
-    private ConfigFrame frame;
+    private ConfigFrame         frame;
+    private TechnologyDirectory techDir;
+
+    public Configuration(TechnologyDirectory techDir) {
+        this.techDir = techDir;
+    }
 
     public void setFrame(ConfigFrame frame) {
         this.frame = frame;
@@ -69,6 +84,20 @@ public class Configuration {
 
     public static String[] getRemoteStrings() {
         return remoteStrings;
+    }
+
+    public String[] getAvailableTechs() {
+        if(techDir.getTechs().isEmpty()) {
+            return null;
+        }
+
+        List<String> techs = new ArrayList<>();
+        for(Technology t : techDir.getTechs()) {
+            techs.add(t.getName());
+        }
+
+        String[] retVal = new String[techs.size()];
+        return techs.toArray(retVal);
     }
 
     public String getTextValue(TextParam param) {

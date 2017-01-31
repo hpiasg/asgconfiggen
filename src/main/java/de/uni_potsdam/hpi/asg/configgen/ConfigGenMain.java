@@ -23,8 +23,11 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import de.uni_potsdam.hpi.asg.common.technology.TechnologyDirectory;
+
 public class ConfigGenMain {
 
+    public static final String techdir          = "$BASEDIR/tech";
     public static final String defaultConfigDir = "$BASEDIR/config";
 
     public static void main(String[] args) {
@@ -33,8 +36,14 @@ public class ConfigGenMain {
         } catch(ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e1) {
             return;
         }
+
+        TechnologyDirectory techDir = TechnologyDirectory.create(techdir, null);
+        if(techDir == null) {
+            return;
+        }
+
         ConfigWindowAdapter adapt = new ConfigWindowAdapter();
-        ConfigFrame cframe = new ConfigFrame(new Configuration(), adapt);
+        ConfigFrame cframe = new ConfigFrame(new Configuration(techDir), adapt);
         cframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         cframe.pack();
         cframe.setLocationRelativeTo(null); //center

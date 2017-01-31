@@ -35,6 +35,7 @@ import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -47,6 +48,7 @@ import de.uni_potsdam.hpi.asg.common.gui.PropertiesFrame;
 import de.uni_potsdam.hpi.asg.common.gui.PropertiesPanel;
 import de.uni_potsdam.hpi.asg.common.gui.PropertiesPanel.AbstractTextParam;
 import de.uni_potsdam.hpi.asg.configgen.Configuration.BooleanParam;
+import de.uni_potsdam.hpi.asg.configgen.Configuration.EnumParam;
 import de.uni_potsdam.hpi.asg.configgen.Configuration.TextParam;
 import de.uni_potsdam.hpi.asg.configgen.generators.MainGenerator;
 
@@ -182,7 +184,8 @@ public class ConfigFrame extends PropertiesFrame {
 
         constructGenerateOsSection(panel);
         constructGenerateToolSection(panel);
-        panel.addTextEntry(5, TextParam.OutDir, "Output directory", ConfigGenMain.defaultConfigDir, true, JFileChooser.DIRECTORIES_ONLY, true);
+        constructGenerateDefaultTechSection(panel, 5);
+        panel.addTextEntry(6, TextParam.OutDir, "Output directory", ConfigGenMain.defaultConfigDir, true, JFileChooser.DIRECTORIES_ONLY, true);
 
         final JButton generateButton = new JButton("Generate");
         generateButton.addActionListener(new ActionListener() {
@@ -201,6 +204,62 @@ public class ConfigFrame extends PropertiesFrame {
 
         getDataFromPanel(panel);
         detectOperatingSystem();
+    }
+
+    private void constructGenerateDefaultTechSection(PropertiesPanel panel, int row) {
+        String[] techs = config.getAvailableTechs();
+
+        boolean unsetDesectable = techs != null;
+        if(techs == null) {
+            techs = new String[]{"No technology found"};
+        }
+
+        panel.addLabelCell(row, "Default technology");
+        JComboBox<String> combobox = addComboBoxCell(panel, row, EnumParam.defaultTech, techs);
+        addDefaultTechCheckboxCell(panel, row, BooleanParam.defaultTechActivated, combobox, unsetDesectable);
+    }
+
+    private JComboBox<String> addComboBoxCell(PropertiesPanel panel, int row, EnumParam paramName, String[] values) {
+        JComboBox<String> combobox = new JComboBox<>(values);
+        enumfields.put(paramName, combobox);
+
+        GridBagConstraints gbc_combobox = new GridBagConstraints();
+        gbc_combobox.anchor = GridBagConstraints.LINE_START;
+        gbc_combobox.fill = GridBagConstraints.HORIZONTAL;
+        gbc_combobox.insets = new Insets(0, 0, 5, 0);
+        gbc_combobox.gridx = 1;
+        gbc_combobox.gridy = row;
+        panel.add(combobox, gbc_combobox);
+
+        combobox.setEnabled(false);
+
+        return combobox;
+    }
+
+    private void addDefaultTechCheckboxCell(PropertiesPanel panel, int row, BooleanParam paramName, final JComboBox<String> combobox, boolean unsetDesectable) {
+        JCheckBox checkbox = new JCheckBox("Unset");
+        buttons.put(BooleanParam.defaultTechActivated, checkbox);
+        checkbox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if(e.getStateChange() == ItemEvent.SELECTED) {
+                    combobox.setEnabled(false);
+                } else if(e.getStateChange() == ItemEvent.DESELECTED) {
+                    combobox.setEnabled(true);
+                } else {
+                    System.err.println("error");
+                }
+            }
+        });
+
+        GridBagConstraints gbc_defaultcheckbox = new GridBagConstraints();
+        gbc_defaultcheckbox.anchor = GridBagConstraints.LINE_START;
+        gbc_defaultcheckbox.insets = new Insets(0, 0, 5, 0);
+        gbc_defaultcheckbox.gridx = 3;
+        gbc_defaultcheckbox.gridy = row;
+        panel.add(checkbox, gbc_defaultcheckbox);
+        checkbox.setSelected(true);
+        checkbox.setEnabled(unsetDesectable);
     }
 
     private void detectOperatingSystem() {
