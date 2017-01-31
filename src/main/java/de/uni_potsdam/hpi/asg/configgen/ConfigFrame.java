@@ -20,6 +20,7 @@ package de.uni_potsdam.hpi.asg.configgen;
  */
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -78,9 +79,10 @@ public class ConfigFrame extends PropertiesFrame {
         gbl_remotepanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         remotePanel.setLayout(gbl_remotepanel);
 
-        JLabel whyLabel = new JLabel("<html><body>We assume that proprietary tools (like Design Compiler) are located<br>on a dedicated server. Please provide the appropiate login data:</body></html>");
+        JLabel whyLabel = new JLabel("<html><body>We assume that proprietary tools (like Design Compiler) are located on a dedicated server. Please provide the appropiate login data:</body></html>");
+        whyLabel.setPreferredSize(new Dimension(20, 30));
         GridBagConstraints gbc_whylabel = new GridBagConstraints();
-        gbc_whylabel.anchor = GridBagConstraints.LINE_START;
+        gbc_whylabel.anchor = GridBagConstraints.FIRST_LINE_START;
         gbc_whylabel.fill = GridBagConstraints.HORIZONTAL;
         gbc_whylabel.insets = new Insets(0, 0, 5, 5);
         gbc_whylabel.gridx = 0;
