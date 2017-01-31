@@ -70,6 +70,12 @@ along with ASGconfiggen.  If not, see <http://www.gnu.org/licenses/>.
 					<exclude>**/*</exclude>
 				</excludes>
 			</resource>
+			<resource>
+				<directory>src/main/resources/jar</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+			</resource>
 		</resources>
 		<pluginManagement>
 			<plugins>
@@ -107,67 +113,6 @@ along with ASGconfiggen.  If not, see <http://www.gnu.org/licenses/>.
 					<source>1.7</source>
 					<target>1.7</target>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>1.7.1</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-						<configuration>
-							<artifactSet>
-								<includes>
-									<include>de.uni_potsdam.hpi.asg:asgconfiggen</include>
-									<include>de.uni_potsdam.hpi.asg:asglogic:jar:</include>
-									<include>de.uni_potsdam.hpi.asg:asgresyn:jar:</include>
-									<include>de.uni_potsdam.hpi.asg:asgdelaymatch:jar:</include>
-									<include>de.uni_potsdam.hpi.asg:asgcommon:jar:</include>
-								</includes>
-							</artifactSet>
-							<filters>
-								<filter>
-									<artifact>de.uni_potsdam.hpi.asg:asglogic</artifact>
-									<includes>
-										<include>de/uni_potsdam/hpi/asg/logictool/io/Config.class</include>
-										<include>de/uni_potsdam/hpi/asg/logictool/io/ToolConfig.class</include>
-									</includes>
-								</filter>
-								<filter>
-									<artifact>de.uni_potsdam.hpi.asg:asgresyn</artifact>
-									<includes>
-										<include>de/uni_potsdam/hpi/asg/resyntool/io/Config.class</include>
-										<include>de/uni_potsdam/hpi/asg/resyntool/io/ToolConfig.class</include>
-										<include>de/uni_potsdam/hpi/asg/resyntool/io/RemoteInvocation.class</include>
-									</includes>
-								</filter>
-								<filter>
-									<artifact>de.uni_potsdam.hpi.asg:asgdelaymatch</artifact>
-									<includes>
-										<include>de/uni_potsdam/hpi/asg/delaymatch/io/Config.class</include>
-										<include>de/uni_potsdam/hpi/asg/delaymatch/io/ToolConfig.class</include>
-										<include>de/uni_potsdam/hpi/asg/delaymatch/io/RemoteInvocation.class</include>
-									</includes>
-								</filter>
-								<filter>
-									<artifact>de.uni_potsdam.hpi.asg:asgcommon</artifact>
-									<includes>
-										<include>de/uni_potsdam/hpi/asg/common/gui/*</include>
-									</includes>
-								</filter>
-							</filters>
-<!-- 							<transformers> -->
-<!-- 								<transformer -->
-<!-- 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer"> -->
-<!-- 									<mainClass>de.uni_potsdam.hpi.asg.configgen.ConfigGenMain</mainClass> -->
-<!-- 								</transformer> -->
-<!-- 							</transformers> -->
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>

@@ -86,7 +86,7 @@ public class ConfigFrame extends PropertiesFrame {
         GridBagConstraints gbc_whylabel = new GridBagConstraints();
         gbc_whylabel.anchor = GridBagConstraints.FIRST_LINE_START;
         gbc_whylabel.fill = GridBagConstraints.HORIZONTAL;
-        gbc_whylabel.insets = new Insets(0, 0, 5, 5);
+        gbc_whylabel.insets = new Insets(5, 5, 5, 5);
         gbc_whylabel.gridx = 0;
         gbc_whylabel.gridwidth = 2;
         gbc_whylabel.gridy = 0;
@@ -101,7 +101,7 @@ public class ConfigFrame extends PropertiesFrame {
         GridBagConstraints gbc_warning = new GridBagConstraints();
         gbc_warning.anchor = GridBagConstraints.LINE_START;
         gbc_warning.fill = GridBagConstraints.HORIZONTAL;
-        gbc_warning.insets = new Insets(0, 0, 5, 5);
+        gbc_warning.insets = new Insets(5, 5, 5, 5);
         gbc_warning.gridx = 0;
         gbc_warning.gridwidth = 2;
         gbc_warning.gridy = 7;
