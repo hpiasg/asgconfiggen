@@ -226,7 +226,7 @@ public class ConfigFrame extends PropertiesFrame {
         GridBagConstraints gbc_combobox = new GridBagConstraints();
         gbc_combobox.anchor = GridBagConstraints.LINE_START;
         gbc_combobox.fill = GridBagConstraints.HORIZONTAL;
-        gbc_combobox.insets = new Insets(0, 0, 5, 0);
+        gbc_combobox.insets = new Insets(0, 0, 5, 5);
         gbc_combobox.gridx = 1;
         gbc_combobox.gridy = row;
         panel.add(combobox, gbc_combobox);
