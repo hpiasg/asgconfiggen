@@ -23,6 +23,7 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import de.uni_potsdam.hpi.asg.common.iohelper.LoggerHelper;
 import de.uni_potsdam.hpi.asg.common.technology.TechnologyDirectory;
 
 public class ConfigGenMain {
@@ -31,6 +32,8 @@ public class ConfigGenMain {
     public static final String defaultConfigDir = "$BASEDIR/config";
 
     public static void main(String[] args) {
+        LoggerHelper.initLogger(3, null, false, "/configgen_log4j2.xml");
+
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch(ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e1) {
