@@ -44,9 +44,9 @@ along with ASGconfiggen.  If not, see <http://www.gnu.org/licenses/>.
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<common.version>2.1.0-SNAPSHOT</common.version>
-		<logic.version>0.1.4</logic.version>
+		<logic.version>0.1.6-SNAPSHOT</logic.version>
 		<resyn.version>1.2.0-SNAPSHOT</resyn.version>
-		<delay.version>1.2.1</delay.version>
+		<delay.version>1.2.3-SNAPSHOT</delay.version>
 	</properties>
 	<build>
 		<resources>
