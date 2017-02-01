@@ -19,15 +19,12 @@ package de.uni_potsdam.hpi.asg.configgen;
  * along with ASGconfiggen.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import de.uni_potsdam.hpi.asg.common.gui.PropertiesPanel.AbstractBooleanParam;
 import de.uni_potsdam.hpi.asg.common.gui.PropertiesPanel.AbstractEnumParam;
 import de.uni_potsdam.hpi.asg.common.gui.PropertiesPanel.AbstractTextParam;
-import de.uni_potsdam.hpi.asg.common.technology.Technology;
 import de.uni_potsdam.hpi.asg.common.technology.TechnologyDirectory;
 
 public class Configuration {
@@ -70,7 +67,7 @@ public class Configuration {
     private String[]    techs;
 
     public Configuration(TechnologyDirectory techDir) {
-        this.techs = getAvailableTechs(techDir);
+        this.techs = techDir.getTechNames();
     }
 
     public void setFrame(ConfigFrame frame) {
@@ -83,20 +80,6 @@ public class Configuration {
 
     public static String[] getRemoteStrings() {
         return remoteStrings;
-    }
-
-    private String[] getAvailableTechs(TechnologyDirectory techDir) {
-        if(techDir.getTechs().isEmpty()) {
-            return null;
-        }
-
-        List<String> techs = new ArrayList<>();
-        for(Technology t : techDir.getTechs()) {
-            techs.add(t.getName());
-        }
-
-        String[] retVal = new String[techs.size()];
-        return techs.toArray(retVal);
     }
 
     public String[] getAvailableTechs() {
