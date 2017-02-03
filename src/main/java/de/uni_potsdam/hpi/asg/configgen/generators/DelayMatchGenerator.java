@@ -31,12 +31,13 @@ public class DelayMatchGenerator {
     private static final String outfile = "delaymatchconfig.xml";
 
     private Configuration       config;
+    private File                file;
 
     public DelayMatchGenerator(Configuration config) {
         this.config = config;
     }
 
-    public void generate() {
+    public boolean generate() {
         Config delaymatchconfig = new Config();
         delaymatchconfig.workdir = "";
         delaymatchconfig.toolconfig = new ToolConfig();
@@ -46,11 +47,11 @@ public class DelayMatchGenerator {
         delaymatchconfig.toolconfig.designCompilerCmd.password = config.getTextValue(TextParam.Password);
         delaymatchconfig.toolconfig.designCompilerCmd.workingdir = config.getTextValue(TextParam.WorkingDir);
 
-        File file = new File(config.getTextValue(TextParam.OutDir), outfile);
-        if(!ConfigExportHelper.writeOut(Config.class, delaymatchconfig, file)) {
-            System.err.println("Failed to generate " + file.getAbsolutePath());
-            return;
-        }
-        System.out.println("Generated " + file.getAbsolutePath());
+        file = new File(config.getTextValue(TextParam.OutDir), outfile);
+        return ConfigExportHelper.writeOut(Config.class, delaymatchconfig, file);
+    }
+
+    public File getFile() {
+        return file;
     }
 }

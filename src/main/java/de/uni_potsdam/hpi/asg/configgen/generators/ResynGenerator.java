@@ -35,12 +35,13 @@ public class ResynGenerator {
     private static final String outfile = "resynconfig.xml";
 
     private Configuration       config;
+    private File                file;
 
     public ResynGenerator(Configuration config) {
         this.config = config;
     }
 
-    public void generate() {
+    public boolean generate() {
         Config resynconfig = new Config();
         resynconfig.componentconfig = "";
         resynconfig.workdir = "";
@@ -63,11 +64,11 @@ public class ResynGenerator {
         resynconfig.toolconfig.designCompilerCmd.password = config.getTextValue(TextParam.Password);
         resynconfig.toolconfig.designCompilerCmd.workingdir = config.getTextValue(TextParam.WorkingDir);
 
-        File file = new File(config.getTextValue(TextParam.OutDir), outfile);
-        if(!ConfigExportHelper.writeOut(Config.class, resynconfig, file)) {
-            System.err.println("Failed to generate " + file.getAbsolutePath());
-            return;
-        }
-        System.out.println("Generated " + file.getAbsolutePath());
+        file = new File(config.getTextValue(TextParam.OutDir), outfile);
+        return ConfigExportHelper.writeOut(Config.class, resynconfig, file);
+    }
+
+    public File getFile() {
+        return file;
     }
 }

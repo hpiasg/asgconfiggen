@@ -30,12 +30,13 @@ public class LogicGenerator {
     private static final String outfile = "logicconfig.xml";
 
     private Configuration       config;
+    private File                file;
 
     public LogicGenerator(Configuration config) {
         this.config = config;
     }
 
-    public void generate() {
+    public boolean generate() {
         Config logicconfig = new Config();
         logicconfig.workdir = "";
         logicconfig.toolconfig = new ToolConfig();
@@ -45,11 +46,11 @@ public class LogicGenerator {
         logicconfig.toolconfig.punfcmd = ConfigExportHelper.formatCmd(config.getTextValue(TextParam.PUNF));
         logicconfig.toolconfig.espressocmd = ConfigExportHelper.formatCmd(config.getTextValue(TextParam.Espresso));
 
-        File file = new File(config.getTextValue(TextParam.OutDir), outfile);
-        if(!ConfigExportHelper.writeOut(Config.class, logicconfig, file)) {
-            System.err.println("Failed to generate " + file.getAbsolutePath());
-            return;
-        }
-        System.out.println("Generated " + file.getAbsolutePath());
+        file = new File(config.getTextValue(TextParam.OutDir), outfile);
+        return ConfigExportHelper.writeOut(Config.class, logicconfig, file);
+    }
+
+    public File getFile() {
+        return file;
     }
 }

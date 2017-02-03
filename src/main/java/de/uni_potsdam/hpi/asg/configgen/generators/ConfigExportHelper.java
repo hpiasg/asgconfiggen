@@ -28,14 +28,18 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import de.uni_potsdam.hpi.asg.configgen.Configuration;
 
 public abstract class ConfigExportHelper {
+    private static final Logger logger = LogManager.getLogger();
+
     @SuppressWarnings("rawtypes")
     public static boolean writeOut(Class cfgclass, Object cfg, File outfile) {
         if(!outfile.getParentFile().exists()) {
             if(!outfile.getParentFile().mkdirs()) {
-                System.err.println("Failed to mkdir");
                 return false;
             }
         }
@@ -51,16 +55,15 @@ public abstract class ConfigExportHelper {
                 m.marshal(cfg, fw);
                 return true;
             } catch(JAXBException e) {
-                System.err.println(e.getLocalizedMessage());
+                logger.error(e.getLocalizedMessage());
                 return false;
             } catch(IOException e) {
-                System.err.println(e.getLocalizedMessage());
+                logger.error(e.getLocalizedMessage());
                 return false;
             } finally {
                 fw.close();
             }
         } catch(IOException e) {
-            System.err.println("Something went wrong");
             return false;
         }
     }

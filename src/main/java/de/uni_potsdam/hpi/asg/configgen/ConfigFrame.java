@@ -43,6 +43,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import de.uni_potsdam.hpi.asg.common.gui.PropertiesFrame;
 import de.uni_potsdam.hpi.asg.common.gui.PropertiesPanel;
 import de.uni_potsdam.hpi.asg.common.gui.PropertiesPanel.AbstractTextParam;
@@ -52,9 +55,10 @@ import de.uni_potsdam.hpi.asg.configgen.Configuration.TextParam;
 import de.uni_potsdam.hpi.asg.configgen.generators.MainGenerator;
 
 public class ConfigFrame extends PropertiesFrame {
-    private static final long serialVersionUID = -4879956586784429087L;
+    private static final long   serialVersionUID = -4879956586784429087L;
+    private static final Logger logger           = LogManager.getLogger();
 
-    private Configuration     config;
+    private Configuration       config;
 
     public ConfigFrame(Configuration config, WindowAdapter adapt) {
         super("ASGconfiggen");
@@ -149,7 +153,7 @@ public class ConfigFrame extends PropertiesFrame {
                         } else if(windowsButton.isSelected()) {
                             textfield.setText(Configuration.getToolsValues().get(paramName)[2]);
                         } else {
-                            System.out.println("error");
+                            //error
                         }
                     }
                     textfield.setEnabled(false);
@@ -158,7 +162,7 @@ public class ConfigFrame extends PropertiesFrame {
                     textfield.setText("");
                     textfield.setEnabled(true);
                 } else {
-                    System.out.println("error");
+                    //error
                 }
             }
         });
@@ -268,7 +272,7 @@ public class ConfigFrame extends PropertiesFrame {
                     setUnix(false);
                 } else if(e.getStateChange() == ItemEvent.DESELECTED) {
                 } else {
-                    System.out.println("error");
+                    //error
                 }
             }
         });
@@ -290,7 +294,7 @@ public class ConfigFrame extends PropertiesFrame {
                     setWindows(false);
                 } else if(e.getStateChange() == ItemEvent.DESELECTED) {
                 } else {
-                    System.out.println("error");
+                    //error
                 }
             }
         });
