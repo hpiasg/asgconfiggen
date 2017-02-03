@@ -32,7 +32,7 @@ public class ConfigGenMain {
     public static final String defaultConfigDir = "$BASEDIR/config";
 
     public static void main(String[] args) {
-        LoggerHelper.initLogger(3, null, false, "/configgen_log4j2.xml");
+        LoggerHelper.initLogger(3, null, false);
 
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
