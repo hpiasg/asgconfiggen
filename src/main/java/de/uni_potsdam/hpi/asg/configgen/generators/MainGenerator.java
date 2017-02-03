@@ -77,6 +77,5 @@ public class MainGenerator {
         } else {
             logger.warn(msg.toString());
         }
-
     }
 }

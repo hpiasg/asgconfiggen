@@ -21,7 +21,11 @@ package de.uni_potsdam.hpi.asg.configgen.generators;
 
 import java.io.File;
 
+import de.uni_potsdam.hpi.asg.common.technology.TechnologyDirectory;
+import de.uni_potsdam.hpi.asg.configgen.ConfigGenMain;
 import de.uni_potsdam.hpi.asg.configgen.Configuration;
+import de.uni_potsdam.hpi.asg.configgen.Configuration.BooleanParam;
+import de.uni_potsdam.hpi.asg.configgen.Configuration.EnumParam;
 import de.uni_potsdam.hpi.asg.configgen.Configuration.TextParam;
 import de.uni_potsdam.hpi.asg.logictool.io.Config;
 import de.uni_potsdam.hpi.asg.logictool.io.ToolConfig;
@@ -39,6 +43,10 @@ public class LogicGenerator {
     public boolean generate() {
         Config logicconfig = new Config();
         logicconfig.workdir = "";
+        if(!config.getBooleanValue(BooleanParam.defaultTechDeActivated)) {
+            String techname = config.getEnumValue(EnumParam.defaultTech);
+            logicconfig.defaultTech = ConfigGenMain.techdir + "/" + techname + TechnologyDirectory.genlibfileExtension;
+        }
         logicconfig.toolconfig = new ToolConfig();
         logicconfig.toolconfig.desijcmd = ConfigExportHelper.formatCmd(config.getTextValue(TextParam.DesiJ));
         logicconfig.toolconfig.petrifycmd = ConfigExportHelper.formatCmd(config.getTextValue(TextParam.Petrify));
