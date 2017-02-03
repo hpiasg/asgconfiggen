@@ -55,10 +55,9 @@ import de.uni_potsdam.hpi.asg.configgen.Configuration.TextParam;
 import de.uni_potsdam.hpi.asg.configgen.generators.MainGenerator;
 
 public class ConfigFrame extends PropertiesFrame {
-    private static final long   serialVersionUID = -4879956586784429087L;
-    private static final Logger logger           = LogManager.getLogger();
+    private static final long serialVersionUID = -4879956586784429087L;
 
-    private Configuration       config;
+    private Configuration     config;
 
     public ConfigFrame(Configuration config, WindowAdapter adapt) {
         super("ASGconfiggen");
