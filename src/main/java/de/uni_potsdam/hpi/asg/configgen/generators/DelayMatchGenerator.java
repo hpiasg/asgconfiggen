@@ -21,7 +21,11 @@ package de.uni_potsdam.hpi.asg.configgen.generators;
 
 import java.io.File;
 
+import de.uni_potsdam.hpi.asg.common.technology.TechnologyDirectory;
+import de.uni_potsdam.hpi.asg.configgen.ConfigGenMain;
 import de.uni_potsdam.hpi.asg.configgen.Configuration;
+import de.uni_potsdam.hpi.asg.configgen.Configuration.BooleanParam;
+import de.uni_potsdam.hpi.asg.configgen.Configuration.EnumParam;
 import de.uni_potsdam.hpi.asg.configgen.Configuration.TextParam;
 import de.uni_potsdam.hpi.asg.delaymatch.io.Config;
 import de.uni_potsdam.hpi.asg.delaymatch.io.RemoteInvocation;
@@ -40,6 +44,10 @@ public class DelayMatchGenerator {
     public boolean generate() {
         Config delaymatchconfig = new Config();
         delaymatchconfig.workdir = "";
+        if(!config.getBooleanValue(BooleanParam.defaultTechDeActivated)) {
+            String techname = config.getEnumValue(EnumParam.defaultTech);
+            delaymatchconfig.defaultTech = ConfigGenMain.techdir + "/" + techname + TechnologyDirectory.techfileExtension;
+        }
         delaymatchconfig.toolconfig = new ToolConfig();
         delaymatchconfig.toolconfig.designCompilerCmd = new RemoteInvocation();
         delaymatchconfig.toolconfig.designCompilerCmd.hostname = config.getTextValue(TextParam.Hostname);
