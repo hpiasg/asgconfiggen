@@ -28,8 +28,11 @@ import de.uni_potsdam.hpi.asg.common.technology.TechnologyDirectory;
 
 public class ConfigGenMain {
 
-    public static final String techdir          = "$BASEDIR/tech";
-    public static final String defaultConfigDir = "$BASEDIR/config";
+    public static final String TECH_DIR          = "$BASEDIR/tech";
+    public static final String CONFIG_DIR        = "$BASEDIR/config";
+    public static final String DELAYMATCH_CONFIG = "delaymatchconfig.xml";
+    public static final String RESYN_CONFIG      = "resynconfig.xml";
+    public static final String LOGIC_CONFIG      = "logicconfig.xml";
 
     public static void main(String[] args) {
         LoggerHelper.initLogger(3, null, false);
@@ -40,7 +43,7 @@ public class ConfigGenMain {
             return;
         }
 
-        TechnologyDirectory techDir = TechnologyDirectory.create(techdir, null);
+        TechnologyDirectory techDir = TechnologyDirectory.create(TECH_DIR, null);
         if(techDir == null) {
             return;
         }

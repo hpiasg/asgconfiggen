@@ -31,10 +31,9 @@ import de.uni_potsdam.hpi.asg.logictool.io.Config;
 import de.uni_potsdam.hpi.asg.logictool.io.ToolConfig;
 
 public class LogicGenerator {
-    private static final String outfile = "logicconfig.xml";
 
-    private Configuration       config;
-    private File                file;
+    private Configuration config;
+    private File          file;
 
     public LogicGenerator(Configuration config) {
         this.config = config;
@@ -45,7 +44,7 @@ public class LogicGenerator {
         logicconfig.workdir = "";
         if(!config.getBooleanValue(BooleanParam.defaultTechDeActivated)) {
             String techname = config.getEnumValue(EnumParam.defaultTech);
-            logicconfig.defaultTech = ConfigGenMain.techdir + "/" + techname + TechnologyDirectory.genlibfileExtension;
+            logicconfig.defaultTech = ConfigGenMain.TECH_DIR + "/" + techname + TechnologyDirectory.genlibfileExtension;
         }
         logicconfig.toolconfig = new ToolConfig();
         logicconfig.toolconfig.desijcmd = ConfigExportHelper.formatCmd(config.getTextValue(TextParam.DesiJ));
@@ -54,7 +53,7 @@ public class LogicGenerator {
         logicconfig.toolconfig.punfcmd = ConfigExportHelper.formatCmd(config.getTextValue(TextParam.PUNF));
         logicconfig.toolconfig.espressocmd = ConfigExportHelper.formatCmd(config.getTextValue(TextParam.Espresso));
 
-        file = new File(config.getTextValue(TextParam.OutDir), outfile);
+        file = new File(config.getTextValue(TextParam.OutDir), ConfigGenMain.LOGIC_CONFIG);
         return ConfigExportHelper.writeOut(Config.class, logicconfig, file);
     }
 

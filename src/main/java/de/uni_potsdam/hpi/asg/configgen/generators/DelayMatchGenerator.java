@@ -32,10 +32,9 @@ import de.uni_potsdam.hpi.asg.delaymatch.io.RemoteInvocation;
 import de.uni_potsdam.hpi.asg.delaymatch.io.ToolConfig;
 
 public class DelayMatchGenerator {
-    private static final String outfile = "delaymatchconfig.xml";
 
-    private Configuration       config;
-    private File                file;
+    private Configuration config;
+    private File          file;
 
     public DelayMatchGenerator(Configuration config) {
         this.config = config;
@@ -46,7 +45,7 @@ public class DelayMatchGenerator {
         delaymatchconfig.workdir = "";
         if(!config.getBooleanValue(BooleanParam.defaultTechDeActivated)) {
             String techname = config.getEnumValue(EnumParam.defaultTech);
-            delaymatchconfig.defaultTech = ConfigGenMain.techdir + "/" + techname + TechnologyDirectory.techfileExtension;
+            delaymatchconfig.defaultTech = ConfigGenMain.TECH_DIR + "/" + techname + TechnologyDirectory.techfileExtension;
         }
         delaymatchconfig.toolconfig = new ToolConfig();
         delaymatchconfig.toolconfig.designCompilerCmd = new RemoteInvocation();
@@ -55,7 +54,7 @@ public class DelayMatchGenerator {
         delaymatchconfig.toolconfig.designCompilerCmd.password = config.getTextValue(TextParam.Password);
         delaymatchconfig.toolconfig.designCompilerCmd.workingdir = config.getTextValue(TextParam.WorkingDir);
 
-        file = new File(config.getTextValue(TextParam.OutDir), outfile);
+        file = new File(config.getTextValue(TextParam.OutDir), ConfigGenMain.DELAYMATCH_CONFIG);
         return ConfigExportHelper.writeOut(Config.class, delaymatchconfig, file);
     }
 

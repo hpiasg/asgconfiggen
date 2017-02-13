@@ -32,10 +32,9 @@ import de.uni_potsdam.hpi.asg.resyntool.io.RemoteInvocation;
 import de.uni_potsdam.hpi.asg.resyntool.io.ToolConfig;
 
 public class ResynGenerator {
-    private static final String outfile = "resynconfig.xml";
 
-    private Configuration       config;
-    private File                file;
+    private Configuration config;
+    private File          file;
 
     public ResynGenerator(Configuration config) {
         this.config = config;
@@ -47,7 +46,7 @@ public class ResynGenerator {
         resynconfig.workdir = "";
         if(!config.getBooleanValue(BooleanParam.defaultTechDeActivated)) {
             String techname = config.getEnumValue(EnumParam.defaultTech);
-            resynconfig.defaultTech = ConfigGenMain.techdir + "/" + techname + TechnologyDirectory.techfileExtension;
+            resynconfig.defaultTech = ConfigGenMain.TECH_DIR + "/" + techname + TechnologyDirectory.techfileExtension;
         }
         resynconfig.toolconfig = new ToolConfig();
         resynconfig.toolconfig.desijcmd = ConfigExportHelper.formatCmd(config.getTextValue(TextParam.DesiJ));
@@ -64,7 +63,7 @@ public class ResynGenerator {
         resynconfig.toolconfig.designCompilerCmd.password = config.getTextValue(TextParam.Password);
         resynconfig.toolconfig.designCompilerCmd.workingdir = config.getTextValue(TextParam.WorkingDir);
 
-        file = new File(config.getTextValue(TextParam.OutDir), outfile);
+        file = new File(config.getTextValue(TextParam.OutDir), ConfigGenMain.RESYN_CONFIG);
         return ConfigExportHelper.writeOut(Config.class, resynconfig, file);
     }
 

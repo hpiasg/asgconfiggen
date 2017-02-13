@@ -185,7 +185,7 @@ public class ConfigFrame extends PropertiesFrame {
         constructGenerateToolSection(panel);
         String[] techs = config.getAvailableTechs();
         panel.addTechnologyChooserWithUnsetEntry(5, "Default technology", techs, EnumParam.defaultTech, BooleanParam.defaultTechDeActivated, "Unset");
-        panel.addTextEntry(6, TextParam.OutDir, "Output directory", ConfigGenMain.defaultConfigDir, true, JFileChooser.DIRECTORIES_ONLY, true);
+        panel.addTextEntry(6, TextParam.OutDir, "Output directory", ConfigGenMain.CONFIG_DIR, true, JFileChooser.DIRECTORIES_ONLY, true);
 
         final JButton generateButton = new JButton("Generate");
         generateButton.addActionListener(new ActionListener() {
