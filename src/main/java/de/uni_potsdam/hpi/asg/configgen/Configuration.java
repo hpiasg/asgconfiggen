@@ -25,6 +25,7 @@ import java.util.Map;
 import de.uni_potsdam.hpi.asg.common.gui.PropertiesPanel.AbstractBooleanParam;
 import de.uni_potsdam.hpi.asg.common.gui.PropertiesPanel.AbstractEnumParam;
 import de.uni_potsdam.hpi.asg.common.gui.PropertiesPanel.AbstractTextParam;
+import de.uni_potsdam.hpi.asg.common.iohelper.FileHelper;
 import de.uni_potsdam.hpi.asg.common.technology.TechnologyDirectory;
 
 public class Configuration {
@@ -89,7 +90,7 @@ public class Configuration {
     public String getTextValue(TextParam param) {
         String str = frame.getTextValue(param);
         if(param == TextParam.OutDir) {
-            str = replaceBasedir(str);
+            str = str.replaceAll("\\$BASEDIR", FileHelper.getInstance().getBasedir());
         }
         return str;
     }
@@ -106,14 +107,5 @@ public class Configuration {
             default:
                 return null;
         }
-    }
-
-    private String replaceBasedir(String str) {
-        String basedir = System.getProperty("basedir");
-        String os = System.getProperty("os.name").toLowerCase();
-        if(os.contains("win")) {
-            basedir = basedir.replaceAll("\\\\", "/");
-        }
-        return str.replaceAll("\\$BASEDIR", basedir);
     }
 }
