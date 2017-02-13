@@ -21,7 +21,7 @@ package de.uni_potsdam.hpi.asg.configgen.generators;
 
 import java.io.File;
 
-import de.uni_potsdam.hpi.asg.common.technology.TechnologyDirectory;
+import de.uni_potsdam.hpi.asg.common.misc.CommonConstants;
 import de.uni_potsdam.hpi.asg.configgen.ConfigGenMain;
 import de.uni_potsdam.hpi.asg.configgen.Configuration;
 import de.uni_potsdam.hpi.asg.configgen.Configuration.BooleanParam;
@@ -46,7 +46,7 @@ public class ResynGenerator {
         resynconfig.workdir = "";
         if(!config.getBooleanValue(BooleanParam.defaultTechDeActivated)) {
             String techname = config.getEnumValue(EnumParam.defaultTech);
-            resynconfig.defaultTech = ConfigGenMain.TECH_DIR + "/" + techname + TechnologyDirectory.techfileExtension;
+            resynconfig.defaultTech = CommonConstants.DEF_TECH_DIR_STR + File.separator + techname + CommonConstants.XMLTECH_FILE_EXTENSION;
         }
         resynconfig.toolconfig = new ToolConfig();
         resynconfig.toolconfig.desijcmd = ConfigExportHelper.formatCmd(config.getTextValue(TextParam.DesiJ));

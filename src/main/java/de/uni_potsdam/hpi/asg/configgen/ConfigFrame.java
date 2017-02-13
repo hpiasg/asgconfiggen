@@ -46,6 +46,7 @@ import javax.swing.JTextField;
 import de.uni_potsdam.hpi.asg.common.gui.PropertiesFrame;
 import de.uni_potsdam.hpi.asg.common.gui.PropertiesPanel;
 import de.uni_potsdam.hpi.asg.common.gui.PropertiesPanel.AbstractTextParam;
+import de.uni_potsdam.hpi.asg.common.misc.CommonConstants;
 import de.uni_potsdam.hpi.asg.configgen.Configuration.BooleanParam;
 import de.uni_potsdam.hpi.asg.configgen.Configuration.EnumParam;
 import de.uni_potsdam.hpi.asg.configgen.Configuration.TextParam;
@@ -185,7 +186,7 @@ public class ConfigFrame extends PropertiesFrame {
         constructGenerateToolSection(panel);
         String[] techs = config.getAvailableTechs();
         panel.addTechnologyChooserWithUnsetEntry(5, "Default technology", techs, EnumParam.defaultTech, BooleanParam.defaultTechDeActivated, "Unset");
-        panel.addTextEntry(6, TextParam.OutDir, "Output directory", ConfigGenMain.CONFIG_DIR, true, JFileChooser.DIRECTORIES_ONLY, true);
+        panel.addTextEntry(6, TextParam.OutDir, "Output directory", CommonConstants.DEF_CONFIG_DIR_STR, true, JFileChooser.DIRECTORIES_ONLY, true);
 
         final JButton generateButton = new JButton("Generate");
         generateButton.addActionListener(new ActionListener() {
