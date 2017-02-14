@@ -25,7 +25,8 @@ import java.util.Map;
 import de.uni_potsdam.hpi.asg.common.gui.PropertiesPanel.AbstractBooleanParam;
 import de.uni_potsdam.hpi.asg.common.gui.PropertiesPanel.AbstractEnumParam;
 import de.uni_potsdam.hpi.asg.common.gui.PropertiesPanel.AbstractTextParam;
-import de.uni_potsdam.hpi.asg.common.iohelper.FileHelper;
+import de.uni_potsdam.hpi.asg.common.iohelper.BasedirHelper;
+import de.uni_potsdam.hpi.asg.common.misc.CommonConstants;
 import de.uni_potsdam.hpi.asg.common.technology.TechnologyDirectory;
 
 public class Configuration {
@@ -90,7 +91,7 @@ public class Configuration {
     public String getTextValue(TextParam param) {
         String str = frame.getTextValue(param);
         if(param == TextParam.OutDir) {
-            str = str.replaceAll("\\$BASEDIR", FileHelper.getInstance().getBasedir());
+            str = BasedirHelper.replaceBasedir(str);
         }
         return str;
     }
