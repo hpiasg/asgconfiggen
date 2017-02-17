@@ -30,7 +30,9 @@ import de.uni_potsdam.hpi.asg.common.misc.CommonConstants;
 import de.uni_potsdam.hpi.asg.common.technology.TechnologyDirectory;
 
 public class Configuration {
-    public static String notapplicableStr = "N/A";
+
+    public static final String  notapplicableStr = "N/A";
+    private static final String basedirStr       = CommonConstants.BASEDIR_STR;
 
     //@formatter:off
     public enum TextParam implements AbstractTextParam {
@@ -54,15 +56,18 @@ public class Configuration {
     private static Map<TextParam, String[]> toolsValues;
     static {
         toolsValues = new LinkedHashMap<>();
-        toolsValues.put(TextParam.DesiJ, new String[]{"DesiJ", "$BASEDIR/bin/DesiJ", "$BASEDIR/bin/DesiJ.bat"});
-        toolsValues.put(TextParam.BalsaC, new String[]{"Balsa-c", "$BASEDIR/tools/balsa/bin/balsa-c", notapplicableStr});
-        toolsValues.put(TextParam.BalsaNetlist, new String[]{"Balsa-netlist", "$BASEDIR/tools/balsa/bin/balsa-netlist", notapplicableStr});
-        toolsValues.put(TextParam.Petrify, new String[]{"Petrify", "$BASEDIR/tools/petrify/petrify", "$BASEDIR/tools/petrify/petrify.exe"});
-        toolsValues.put(TextParam.PUNF, new String[]{"PUNF", "$BASEDIR/tools/punf/punf", "$BASEDIR/tools/punf/punf.exe"});
-        toolsValues.put(TextParam.MPSAT, new String[]{"MPSAT", "$BASEDIR/tools/mpsat/mpsat", "$BASEDIR/tools/mpsat/mpsat.exe"});
-        toolsValues.put(TextParam.Petreset, new String[]{"Petreset", notapplicableStr, notapplicableStr});
-        toolsValues.put(TextParam.ASGlogic, new String[]{"ASGlogic", "$BASEDIR/bin/ASGlogic", "$BASEDIR/bin/ASGlogic.bat"});
-        toolsValues.put(TextParam.Espresso, new String[]{"Espresso", "$BASEDIR/tools/espresso/espresso", "$BASEDIR/tools/espresso/espresso.exe"});
+        //@formatter:off
+        //                                                    Tool              Unix default                                    Windows default
+        toolsValues.put(TextParam.DesiJ, new String[]{        "DesiJ",          basedirStr + "/bin/DesiJ",                      basedirStr + "/bin/DesiJ.bat"               });
+        toolsValues.put(TextParam.BalsaC, new String[]{       "Balsa-c",        basedirStr + "/tools/balsa/bin/balsa-c",        notapplicableStr                            });
+        toolsValues.put(TextParam.BalsaNetlist, new String[]{ "Balsa-netlist",  basedirStr + "/tools/balsa/bin/balsa-netlist",  notapplicableStr                            });
+        toolsValues.put(TextParam.Petrify, new String[]{      "Petrify",        basedirStr + "/tools/petrify/petrify",          basedirStr + "/tools/petrify/petrify.exe"   });
+        toolsValues.put(TextParam.PUNF, new String[]{         "PUNF",           basedirStr + "/tools/punf/punf",                basedirStr + "/tools/punf/punf.exe"         });
+        toolsValues.put(TextParam.MPSAT, new String[]{        "MPSAT",          basedirStr + "/tools/mpsat/mpsat",              basedirStr + "/tools/mpsat/mpsat.exe"       });
+        toolsValues.put(TextParam.Petreset, new String[]{     "Petreset",       notapplicableStr,                               notapplicableStr                            });
+        toolsValues.put(TextParam.ASGlogic, new String[]{     "ASGlogic",       basedirStr + "/bin/ASGlogic",                   basedirStr + "/bin/ASGlogic.bat"            });
+        toolsValues.put(TextParam.Espresso, new String[]{     "Espresso",       basedirStr + "/tools/espresso/espresso",        basedirStr + "/tools/espresso/espresso.exe" });
+        //@formatter:on
     }
 
     private ConfigFrame frame;

@@ -26,12 +26,15 @@ import javax.swing.UnsupportedLookAndFeelException;
 import de.uni_potsdam.hpi.asg.common.iohelper.LoggerHelper;
 import de.uni_potsdam.hpi.asg.common.iohelper.LoggerHelper.Mode;
 import de.uni_potsdam.hpi.asg.common.technology.TechnologyDirectory;
+import de.uni_potsdam.hpi.asg.delaymatch.DelayMatchMain;
+import de.uni_potsdam.hpi.asg.logictool.LogicMain;
+import de.uni_potsdam.hpi.asg.resyntool.ResynMain;
 
 public class ConfigGenMain {
 
-    public static final String DELAYMATCH_CONFIG = "delaymatchconfig.xml";
-    public static final String RESYN_CONFIG      = "resynconfig.xml";
-    public static final String LOGIC_CONFIG      = "logicconfig.xml";
+    public static final String DELAYMATCH_CONFIG = DelayMatchMain.DEF_CONFIG_FILE_NAME;
+    public static final String RESYN_CONFIG      = ResynMain.DEF_CONFIG_FILE_NAME;
+    public static final String LOGIC_CONFIG      = LogicMain.DEF_CONFIG_FILE_NAME;
 
     public static void main(String[] args) {
         LoggerHelper.initLogger(3, null, false, Mode.gui);
