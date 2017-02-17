@@ -19,16 +19,15 @@ package de.uni_potsdam.hpi.asg.configgen;
  * along with ASGconfiggen.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.WindowAdapter;
 import java.util.Map.Entry;
 
 import javax.swing.AbstractButton;
@@ -43,7 +42,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
-import de.uni_potsdam.hpi.asg.common.gui.PropertiesFrame;
+import de.uni_potsdam.hpi.asg.common.gui.AbstractMainPanel;
 import de.uni_potsdam.hpi.asg.common.gui.PropertiesPanel;
 import de.uni_potsdam.hpi.asg.common.gui.PropertiesPanel.AbstractTextParam;
 import de.uni_potsdam.hpi.asg.common.misc.CommonConstants;
@@ -52,19 +51,19 @@ import de.uni_potsdam.hpi.asg.configgen.Configuration.EnumParam;
 import de.uni_potsdam.hpi.asg.configgen.Configuration.TextParam;
 import de.uni_potsdam.hpi.asg.configgen.generators.MainGenerator;
 
-public class ConfigFrame extends PropertiesFrame {
+public class ConfigPanel extends AbstractMainPanel {
     private static final long serialVersionUID = -4879956586784429087L;
 
     private Configuration     config;
+    private Window            parent;
 
-    public ConfigFrame(Configuration config, WindowAdapter adapt) {
-        super("ASGconfiggen");
+    public ConfigPanel(Window parent, Configuration config) {
         this.config = config;
-        this.config.setFrame(this);
-        this.addWindowListener(adapt);
+        this.config.setPanel(this);
+        this.parent = parent;
 
         JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-        getContentPane().add(tabbedPane, BorderLayout.CENTER);
+        this.add(tabbedPane);
 
         constructRemotePanel(tabbedPane);
         constructToolsPanel(tabbedPane);
@@ -72,7 +71,7 @@ public class ConfigFrame extends PropertiesFrame {
     }
 
     private void constructRemotePanel(JTabbedPane tabbedPane) {
-        PropertiesPanel remotePanel = new PropertiesPanel(this);
+        PropertiesPanel remotePanel = new PropertiesPanel(parent);
         tabbedPane.addTab("Remote login", null, remotePanel, null);
         GridBagLayout gbl_remotepanel = new GridBagLayout();
         gbl_remotepanel.columnWidths = new int[]{150, 200, 0};
@@ -111,7 +110,7 @@ public class ConfigFrame extends PropertiesFrame {
     }
 
     private void constructToolsPanel(JTabbedPane tabbedPane) {
-        PropertiesPanel toolsPanel = new PropertiesPanel(this);
+        PropertiesPanel toolsPanel = new PropertiesPanel(parent);
         tabbedPane.addTab("External tools", null, toolsPanel, null);
         GridBagLayout gbl_toolspanel = new GridBagLayout();
         gbl_toolspanel.columnWidths = new int[]{100, 300, 50, 100, 0};
@@ -173,7 +172,7 @@ public class ConfigFrame extends PropertiesFrame {
     }
 
     private void constructGeneratePanel(JTabbedPane tabbedPane) {
-        PropertiesPanel panel = new PropertiesPanel(this);
+        PropertiesPanel panel = new PropertiesPanel(parent);
         tabbedPane.addTab("Generate", null, panel, null);
         GridBagLayout gbl_genpanel = new GridBagLayout();
         gbl_genpanel.columnWidths = new int[]{170, 300, 50, 80, 0};

@@ -70,15 +70,15 @@ public class Configuration {
         //@formatter:on
     }
 
-    private ConfigFrame frame;
+    private ConfigPanel panel;
     private String[]    techs;
 
     public Configuration(TechnologyDirectory techDir) {
         this.techs = techDir.getTechNames();
     }
 
-    public void setFrame(ConfigFrame frame) {
-        this.frame = frame;
+    public void setPanel(ConfigPanel frame) {
+        this.panel = frame;
     }
 
     public static Map<TextParam, String[]> getToolsValues() {
@@ -94,7 +94,7 @@ public class Configuration {
     }
 
     public String getTextValue(TextParam param) {
-        String str = frame.getTextValue(param);
+        String str = panel.getTextValue(param);
         if(param == TextParam.OutDir) {
             str = BasedirHelper.replaceBasedir(str);
         }
@@ -102,11 +102,11 @@ public class Configuration {
     }
 
     public boolean getBooleanValue(BooleanParam param) {
-        return frame.getBooleanValue(param);
+        return panel.getBooleanValue(param);
     }
 
     public String getEnumValue(EnumParam param) {
-        int index = frame.getEnumValue(param);
+        int index = panel.getEnumValue(param);
         switch(param) {
             case defaultTech:
                 return techs[index];
