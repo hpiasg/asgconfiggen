@@ -148,7 +148,7 @@ along with ASGconfiggen.  If not, see <http://www.gnu.org/licenses/>.
 									<id>ASGconfiggen_gui</id>
 									<jvmSettings>
 										<extraArguments>
-											<extraArgument>-Dlog4j.configurationFile=@BASEDIR@/config/logic_log4j2.xml</extraArgument>
+											<extraArgument>-Dlog4j.configurationFile=@BASEDIR@/config/log4j2_noconfig.xml</extraArgument>
 										</extraArguments>
 									</jvmSettings>
 								</program>
@@ -211,7 +211,7 @@ along with ASGconfiggen.  If not, see <http://www.gnu.org/licenses/>.
 									<id>ASGconfiggen_gui</id>
 									<jvmSettings>
 										<extraArguments>
-											<extraArgument>-Dlog4j.configurationFile=@BASEDIR@/config/configgen_log4j2.xml</extraArgument>
+											<extraArgument>-Dlog4j.configurationFile=@BASEDIR@/config/log4j2_noconfig.xml</extraArgument>
 										</extraArguments>
 									</jvmSettings>
 								</program>
