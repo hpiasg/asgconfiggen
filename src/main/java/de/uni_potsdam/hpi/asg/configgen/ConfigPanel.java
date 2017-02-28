@@ -19,6 +19,7 @@ package de.uni_potsdam.hpi.asg.configgen;
  * along with ASGconfiggen.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -57,17 +58,27 @@ public class ConfigPanel extends AbstractMainPanel {
     private Configuration     config;
     private Window            parent;
 
-    public ConfigPanel(Window parent, Configuration config) {
+    public ConfigPanel(Window parent, final Configuration config) {
         this.config = config;
         this.config.setPanel(this);
         this.parent = parent;
 
+        this.setLayout(new BorderLayout());
         JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-        this.add(tabbedPane);
+        this.add(tabbedPane, BorderLayout.CENTER);
 
         constructRemotePanel(tabbedPane);
         constructToolsPanel(tabbedPane);
         constructGeneratePanel(tabbedPane);
+
+        final JButton generateButton = new JButton("Generate");
+        generateButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                MainGenerator gen = new MainGenerator(config);
+                gen.generate();
+            }
+        });
+        this.add(generateButton, BorderLayout.PAGE_END);
     }
 
     private void constructRemotePanel(JTabbedPane tabbedPane) {
@@ -177,8 +188,8 @@ public class ConfigPanel extends AbstractMainPanel {
         GridBagLayout gbl_genpanel = new GridBagLayout();
         gbl_genpanel.columnWidths = new int[]{170, 300, 50, 80, 0};
         gbl_genpanel.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
-        gbl_genpanel.rowHeights = new int[]{15, 15, 15, 15, 15, 15, 15, 15, 0};
-        gbl_genpanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gbl_genpanel.rowHeights = new int[]{15, 15, 15, 15, 15, 15, 15, 0};
+        gbl_genpanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         panel.setLayout(gbl_genpanel);
 
         constructGenerateOsSection(panel);
@@ -186,21 +197,6 @@ public class ConfigPanel extends AbstractMainPanel {
         String[] techs = config.getAvailableTechs();
         panel.addTechnologyChooserWithUnsetEntry(5, "Default technology", techs, EnumParam.defaultTech, BooleanParam.defaultTechDeActivated, "Unset");
         panel.addTextEntry(6, TextParam.OutDir, "Output directory", CommonConstants.DEF_CONFIG_DIR_STR, true, JFileChooser.DIRECTORIES_ONLY, true);
-
-        final JButton generateButton = new JButton("Generate");
-        generateButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                MainGenerator gen = new MainGenerator(config);
-                gen.generate();
-            }
-        });
-        GridBagConstraints gbc_generatebutton = new GridBagConstraints();
-        gbc_generatebutton.anchor = GridBagConstraints.CENTER;
-        gbc_generatebutton.insets = new Insets(0, 0, 5, 5);
-        gbc_generatebutton.gridx = 0;
-        gbc_generatebutton.gridy = 7;
-        gbc_generatebutton.gridwidth = 4;
-        panel.add(generateButton, gbc_generatebutton);
 
         getDataFromPanel(panel);
         detectOperatingSystem();
