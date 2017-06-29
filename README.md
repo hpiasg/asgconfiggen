@@ -1,7 +1,7 @@
 ASGconfiggen
 ------------
 
-ASGconfiggen generates configuration file for the ASGtools.
+ASGconfiggen generates configuration files for the ASGtools (ASGdelaymatch, ASGlogic, ASGresyn).
 
 ### Installation ###
 
@@ -17,4 +17,8 @@ For the following example command it is assumed that your current working direct
 
 To build ASGtechmngr, Apache Maven v3 (or later) and the Java Development Kit (JDK) v1.7 (or later) are required.
 
-1. Execute `mvn clean install -DskipTests`
+1. Build [ASGcommon](https://github.com/hpiasg/asgcommon)
+2. Build [ASGlogic](https://github.com/hpiasg/asglogic)
+3. Build [ASGresyn](https://github.com/hpiasg/asgresyn)
+4. Build [ASGdelaymatch](https://github.com/hpiasg/asgdelaymatch)
+5. Execute `mvn clean install -DskipTests`
