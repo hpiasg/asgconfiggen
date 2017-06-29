@@ -1,4 +1,4 @@
-ASGconfiggen
+ASGconfigGen v1.0
 Copyright (C) 2017 Hasso-Plattner-Institut fuer Softwaresystemtechnik GmbH
 
 This product includes software developed at Hasso-Plattner-Institut fuer Softwaresystemtechnik GmbH.
@@ -6,8 +6,24 @@ The Software developed and owned by the Hasso-Plattner-Institut fuer Softwaresys
 
 This software makes use of the following libraries:
 
-
+ASGcommon v3.0
+https://github.com/hpiasg/asgcommon
+Copyright (C) 2012-2017 Universitaet Augsburg, Hasso-Plattner-Institut fuer Softwaresystemtechnik GmbH
+Licensed under GNU General Public License (GPL), Version 3.0
 
 This software makes use of the following external software:
 
+ASGdelaymatch v1.3
+https://github.com/hpiasg/asgdelaymatch
+Copyright (C) 2012-2017 Universitaet Augsburg, Hasso-Plattner-Institut fuer Softwaresystemtechnik GmbH
+Licensed under GNU General Public License (GPL), Version 3.0
 
+ASGlogic v0.2
+https://github.com/hpiasg/asglogic
+Copyright (C) 2012-2017 Universitaet Augsburg, Hasso-Plattner-Institut fuer Softwaresystemtechnik GmbH
+Licensed under GNU General Public License (GPL), Version 3.0
+
+ASGresyn v1.2
+https://github.com/hpiasg/asgresyn
+Copyright (C) 2012-2017 Universitaet Augsburg, Hasso-Plattner-Institut fuer Softwaresystemtechnik GmbH
+Licensed under GNU General Public License (GPL), Version 3.0
